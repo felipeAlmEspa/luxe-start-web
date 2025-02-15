@@ -1,0 +1,1 @@
+<div className="justify-between grid grid-cols-2 w-1/4"> alinear y divider
