@@ -34,7 +34,7 @@ export const Carousel = () => {
       {/* Slide container */}
       <div className="overflow-hidden rounded-2xl">
         <div
-          className="flex transition-transform duration-500"
+          className="flex transition-transform duration-500 h-[380px]"
           style={{
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
@@ -45,8 +45,8 @@ export const Carousel = () => {
               className="w-full flex-shrink-0"
               src={slide}
               alt="Next.js logo"
-              width={180}
-              height={38}
+              width={280}
+              height={540} // Este valor controla la altura
               priority
             />
           ))}
