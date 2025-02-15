@@ -33,7 +33,7 @@ export const MyHeader = () => {
         </div>
       </div>
       <Divider />
-      <div className="w-screen">
+      <div className="w-full">
         <div className="flex pt-3 pb-3 flex-col sm:flex-row">
           <div className="w-full sm:w-1/3 text-center"></div>
           <div className="w-full sm:w-1/3 text-center">
