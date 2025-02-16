@@ -11,10 +11,11 @@ import {
 } from "@heroui/react";
 import { useCallback, useState } from "react";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
+import { useRouter } from "next/navigation";
 
 export const MyHeader = () => {
   const [selectedKeys, setSelectedKeys] = useState("Mis muebles");
-
+  const router = useRouter();
   const listaFavoritos = useFavoritosStore(
     (state) => state.state.listaFavoritos
   );
@@ -25,6 +26,11 @@ export const MyHeader = () => {
       setSelectedKeys(selectedKey.toString());
     }
   }, []);
+
+  const navegar = useCallback(() => {
+    console.log("Test ssssss1111111111 passed");
+    router.push("/pages/favoritos");
+  }, [router]);
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
@@ -59,7 +65,7 @@ export const MyHeader = () => {
                     variant="flat"
                     onSelectionChange={selectedValue}
                   >
-                    <DropdownItem key="Favoritos">
+                    <DropdownItem key="Favoritos" onPress={navegar}>
                       <div className="flex justify-between">
                         <small>Favoritos</small>
                         <Heart />
@@ -75,7 +81,11 @@ export const MyHeader = () => {
                 </Dropdown>
               </div>
               <div className="hidden sm:flex">
-                <Button className="bg-transparent text-black" color="primary">
+                <Button
+                  className="bg-transparent text-black"
+                  color="primary"
+                  onPress={() => router.push("/pages/favoritos")}
+                >
                   <small>Favoritos {listaFavoritos.length}</small>
                   <Heart />
                 </Button>

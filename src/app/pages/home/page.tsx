@@ -12,6 +12,7 @@ const Home = () => {
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
   const [filtroInput, setFiltroInput] = useState<string | null>(null);
   const { data } = useMueble();
+
   const obtenerColores = useMemo(() => {
     if (data) {
       return data
