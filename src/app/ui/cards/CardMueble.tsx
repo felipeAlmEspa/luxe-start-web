@@ -30,7 +30,7 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   };
   return (
     <>
-      <Card className="max-w-[500px] w-[330px]">
+      <Card className="w-[320px] max-w-[500px] min-w-[220px]">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
             <p className="text-md">
@@ -45,8 +45,9 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
         <CardBody>
           <Image
             alt="heroui logo"
-            width={500}
+            width={320}
             height={220}
+            className="w-full h-full object-cover"
             radius="sm"
             src={mueble.img ?? ""}
             onClick={() => verImagen()}

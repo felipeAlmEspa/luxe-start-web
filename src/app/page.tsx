@@ -3,16 +3,20 @@ import { useMueble } from "@/app/service/muebles/useMueble";
 import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
+import { useFavoritosStore } from "@/store/useFavoritosStore";
 import { Divider, Input } from "@heroui/react";
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
   const [filtroInput, setFiltroInput] = useState<string | null>(null);
   const { data, isLoading } = useMueble();
-
+  const cargaInicial = useFavoritosStore((state) => state.cargaInicial);
+  useEffect(() => {
+    cargaInicial();
+  }, [cargaInicial]);
   const obtenerColores = useMemo(() => {
     if (data) {
       return data
@@ -131,12 +135,12 @@ const Home = () => {
           />
         </nav>
 
-        <div className="flex flex-wrap justify-center gap-10">
+        <div className="flex flex-wrap justify-center gap-2">
           {filtrarData &&
             filtrarData.map((item, index) => (
               <div
                 key={index}
-                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2"
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2 min-w-[340px]"
               >
                 <CardMueble key={index} mueble={item} />
               </div>

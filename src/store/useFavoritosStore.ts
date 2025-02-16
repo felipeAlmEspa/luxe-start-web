@@ -10,6 +10,7 @@ export type TypeFavoritosStore = {
   addFavorito: (mueble: IMueble) => void;
   removeFavorito: (id: number) => void;
   updateFavorito: (updatedMueble: IMueble) => void;
+  cargaInicial: () => void;
 };
 
 export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
@@ -55,6 +56,15 @@ export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
       LocalStorageManager.setItem("muebles", newLista);
       return {
         state: { ...state.state, listaFavoritos: newLista },
+      };
+    }),
+
+  // Cargar datos desde localStorage
+  cargaInicial: () =>
+    set(() => {
+      const lista = LocalStorageManager.getItem<IMueble[]>("muebles") ?? [];
+      return {
+        state: { listaFavoritos: lista },
       };
     }),
 }));
