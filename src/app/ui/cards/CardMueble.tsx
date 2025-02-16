@@ -11,15 +11,22 @@ import {
 } from "@heroui/react";
 import { ModalImagen } from "../modals/Modalmagen";
 import { Heart, ReceiptText, ShoppingCart } from "lucide-react";
+import { LocalStorageManager } from "../../../../ts/local-storage/LocalStorageManager";
+import { useFavoritosStore } from "@/store/useFavoritosStore";
 
 interface CardMuebleProps {
   mueble: IMueble;
 }
 export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { addFavorito } = useFavoritosStore();
 
   const verImagen = () => {
     onOpen();
+  };
+  const guardarFavorito = () => {
+    LocalStorageManager.addMueble(mueble);
+    addFavorito(mueble);
   };
   return (
     <>
@@ -51,6 +58,7 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
           <Button
             className="bg-transparent text-black border-1 border-black"
             color="primary"
+            onPress={guardarFavorito}
           >
             <Heart size={16} color="red" />
           </Button>
