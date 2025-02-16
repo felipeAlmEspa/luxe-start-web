@@ -1,5 +1,6 @@
 export interface IMueble {
   id: number | null;
+  titulo: string | null;
   activo: boolean | null;
   precio: number | null;
   descuento: number | null;
@@ -11,4 +12,5 @@ export interface IMueble {
   ancho: number | null;
   largo: number | null;
   categoria: string | null;
+  color: string | null;
 }
