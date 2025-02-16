@@ -2,7 +2,9 @@
 
 // components/Carousel.js
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ModalImagen } from "./modals/Modalmagen";
+import { useDisclosure } from "@heroui/react";
 
 interface CarouselProps {
   data: { img: string }[];
@@ -10,16 +12,46 @@ interface CarouselProps {
 
 export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleIndicators, setVisibleIndicators] = useState([0, 1, 2, 3, 4]);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [image, setImage] = useState<string | null>(null);
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? data.length - 1 : prevIndex - 1
     );
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === data.length - 1 ? 0 : prevIndex + 1
     );
+  }, [data.length]);
+
+  // UseEffect para mover el carrusel automáticamente cada 5 segundos
+  useEffect(() => {
+    const interval = setInterval(handleNext, 5000); // 5000 ms = 5 segundos
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval);
+  }, [handleNext]);
+  // Función para manejar la visualización de los indicadores (mostrando solo 5 a la vez)
+  useEffect(() => {
+    const totalIndicators = data.length;
+    const indicatorsPerPage = 5;
+    const startIndex =
+      Math.floor(currentIndex / indicatorsPerPage) * indicatorsPerPage;
+
+    setVisibleIndicators(
+      Array.from(
+        { length: indicatorsPerPage },
+        (_, index) => startIndex + index
+      ).filter((index) => index < totalIndicators)
+    );
+  }, [currentIndex, data.length]);
+
+  const verImagen = (img: string) => {
+    setImage(img);
+    onOpen();
   };
 
   return (
@@ -41,6 +73,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
               width={200}
               height={200} // Este valor controla la altura
               priority
+              onClick={() => verImagen(slide.img)}
             />
           ))}
         </div>
@@ -62,7 +95,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
 
       {/* Indicators */}
       <div className="flex justify-center mt-4 space-x-2">
-        {data.map((_, index) => (
+        {visibleIndicators.map((index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
@@ -72,6 +105,13 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
           ></button>
         ))}
       </div>
+      {isOpen && image && (
+        <ModalImagen
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          imageUrl={image}
+        />
+      )}
     </div>
   );
 };
