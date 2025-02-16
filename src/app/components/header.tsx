@@ -1,5 +1,5 @@
 "use client";
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart, Home, ShoppingCart } from "lucide-react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -9,13 +9,19 @@ import {
   SharedSelection,
   Divider,
 } from "@heroui/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
 import { useRouter } from "next/navigation";
 
 export const MyHeader = () => {
   const [selectedKeys, setSelectedKeys] = useState("Mis muebles");
   const router = useRouter();
+  const cargaInicial = useFavoritosStore((state) => state.cargaInicial);
+
+  useEffect(() => {
+    cargaInicial();
+  }, [cargaInicial]);
+
   const listaFavoritos = useFavoritosStore(
     (state) => state.state.listaFavoritos
   );
@@ -46,7 +52,16 @@ export const MyHeader = () => {
         <Divider />
         <div className="w-full grid">
           <div className="flex pb-2 pt-2 flex-col sm:flex-row">
-            <div className="w-full sm:w-1/3 text-center"></div>
+            <div className="w-full sm:w-1/3 sm:text-left text-center">
+              <Button
+                className="bg-transparent text-black relative"
+                color="primary"
+                onPress={() => router.push("/")}
+              >
+                <Home className="w-15 h-15" />
+                <strong>Inicio</strong>
+              </Button>
+            </div>
             <div className="w-full sm:w-1/3 text-center">
               <h1 className="text-xl sm:text-3xl font-serif">MUEBLERÍA LUXE</h1>
             </div>
@@ -65,9 +80,14 @@ export const MyHeader = () => {
                     onSelectionChange={selectedValue}
                   >
                     <DropdownItem key="Favoritos" onPress={navegar}>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between relative">
                         <small>Favoritos</small>
-                        <Heart />
+                        <Heart className="w-7 h-7" />
+                        {listaFavoritos.length > 0 && (
+                          <span className="absolute text-center -top-1 -right-2 bg-primary text-white text-xs font-bold px-1 py-1 rounded-full w-6 h-6">
+                            {listaFavoritos.length}
+                          </span>
+                        )}
                       </div>
                     </DropdownItem>
                     <DropdownItem key="Carrito">
@@ -81,13 +101,19 @@ export const MyHeader = () => {
               </div>
               <div className="hidden sm:flex">
                 <Button
-                  className="bg-transparent text-black"
+                  className="bg-transparent text-black relative"
                   color="primary"
                   onPress={() => router.push("/pages/favoritos")}
                 >
-                  <small>Favoritos {listaFavoritos.length}</small>
-                  <Heart />
+                  <small>Favoritos</small>
+                  <Heart className="w-7 h-7" />
+                  {listaFavoritos.length > 0 && (
+                    <span className="absolute top-1 right-2 bg-primary text-white text-xs font-bold px-1 py-1 rounded-full w-6 h-6">
+                      {listaFavoritos.length}
+                    </span>
+                  )}
                 </Button>
+
                 <Button className="bg-transparent text-black" color="primary">
                   <small>Carrito</small>
                   <ShoppingCart />

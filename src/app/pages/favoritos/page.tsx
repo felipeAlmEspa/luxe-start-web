@@ -88,7 +88,7 @@ const Favoritos = () => {
 
   return (
     <div className="flex flex-wrap justify-center gap-1">
-      <nav className="flex flex-col sm:flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
+      <nav className="flex flex-col sm:flex-row gap-4 w-full bg-[#cacaca] p-3 items-center justify-center">
         <Input
           className="w-full sm:w-1/4"
           label="Buscar"
@@ -119,7 +119,7 @@ const Favoritos = () => {
       </nav>
 
       <Divider />
-      <div className="grid grid-cols-2 gap-4 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         {filtrarData.map((item, index) => (
           <CardDetalleProducto key={index} mueble={item} />
         ))}

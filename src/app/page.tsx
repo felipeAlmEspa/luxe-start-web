@@ -3,20 +3,16 @@ import { useMueble } from "@/app/service/muebles/useMueble";
 import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
-import { useFavoritosStore } from "@/store/useFavoritosStore";
 import { Divider, Input } from "@heroui/react";
 import { Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
   const [filtroInput, setFiltroInput] = useState<string | null>(null);
   const { data, isLoading } = useMueble();
-  const cargaInicial = useFavoritosStore((state) => state.cargaInicial);
-  useEffect(() => {
-    cargaInicial();
-  }, [cargaInicial]);
+
   const obtenerColores = useMemo(() => {
     if (data) {
       return data

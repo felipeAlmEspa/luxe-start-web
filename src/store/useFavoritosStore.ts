@@ -8,7 +8,7 @@ export type TypeFavoritosStore = {
   };
   setState: (newState: Partial<TypeFavoritosStore["state"]>) => void;
   addFavorito: (mueble: IMueble) => void;
-  removeFavorito: (id: number) => void;
+  removeFavorito: (id: number | null) => void;
   updateFavorito: (updatedMueble: IMueble) => void;
   cargaInicial: () => void;
 };
@@ -36,7 +36,7 @@ export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
     }),
 
   // Eliminar un mueble de favoritos y actualizar localStorage
-  removeFavorito: (id: number) =>
+  removeFavorito: (id: number | null) =>
     set((state) => {
       const newLista = state.state.listaFavoritos.filter(
         (mueble) => mueble.id !== id

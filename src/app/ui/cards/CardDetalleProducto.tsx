@@ -10,9 +10,8 @@ import {
   Button,
 } from "@heroui/react";
 import { ModalImagen } from "../modals/Modalmagen";
-import { Heart, ReceiptText, ShoppingCart } from "lucide-react";
-import { LocalStorageManager } from "../../../../ts/local-storage/LocalStorageManager";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
+import { useMemo } from "react";
 
 interface CardDetalleProductoProps {
   mueble: IMueble;
@@ -20,16 +19,20 @@ interface CardDetalleProductoProps {
 export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
   mueble,
 }) => {
+  const removeFavorito = useFavoritosStore((state) => state.removeFavorito);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { addFavorito } = useFavoritosStore();
 
   const verImagen = () => {
     onOpen();
   };
-  const guardarFavorito = () => {
-    LocalStorageManager.addMueble(mueble);
-    addFavorito(mueble);
-  };
+
+  const calcularDescuento = useMemo(() => {
+    if (!mueble.precio) return 0;
+    if (!mueble.descuento) return mueble.precio;
+
+    return (mueble.precio * mueble.descuento) / 100;
+  }, [mueble.descuento, mueble.precio]);
+
   return (
     <div className="min-w-1/2">
       <Card>
@@ -44,37 +47,85 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
           </div>
         </CardHeader>
         <Divider />
-        <CardBody className="grid grid-cols-2 gap-4 w-1/2">
-          <Image
-            alt="heroui logo"
-            width={300}
-            height={220}
-            radius="sm"
-            src={mueble.img ?? ""}
-            onClick={() => verImagen()}
-          />
-          <p>{mueble.descripcion ? mueble.descripcion : "Sin descripción"}</p>
+        <CardBody className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <div className="w-full grid place-items-center">
+            <Image
+              alt="heroui logo"
+              width={300}
+              height={220}
+              radius="sm"
+              src={mueble.img ?? ""}
+              onClick={() => verImagen()}
+            />
+          </div>
+          <div className="w-full">
+            <div>
+              <strong>
+                <small>Categoria: </small>
+              </strong>
+              <small>
+                {mueble.categoria ? mueble.categoria : "Sin información"}
+              </small>
+            </div>
+            <div>
+              <strong>
+                <small>Largo: </small>
+              </strong>
+              <small>{mueble.largo ? mueble.largo : "Sin información"}</small>
+            </div>
+            <div>
+              <strong>
+                <small>Ancho: </small>
+              </strong>
+              <small>{mueble.ancho ? mueble.ancho : "Sin información"}</small>
+            </div>
+            <div>
+              <strong>
+                <small>Alto: </small>
+              </strong>
+              <small>{mueble.alto ? mueble.alto : "Sin información"}</small>
+            </div>
+            <div>
+              <strong>
+                <small>Color: </small>
+              </strong>
+              <small>{mueble.color ? mueble.color : "Sin información"}</small>
+            </div>
+            <div>
+              <strong>
+                <small>Descripción: </small>
+              </strong>
+              <small>
+                {mueble.descripcion ? mueble.descripcion : "Sin información"}
+              </small>
+            </div>
+            <div className="flex items-center gap-4 p-4 border shadow-md rounded-lg">
+              <span className="text-sm font-semibold text-gray-700">
+                Precio: {mueble.precio ? mueble.precio : 0}
+              </span>
+              <span className="text-sm text-gray-700 font-bold">
+                Descuento: {mueble.descuento ? mueble.descuento : 0}%
+              </span>
+              <span className="text-sm font-semibold text-gray-900">
+                Final: {calcularDescuento}
+              </span>
+            </div>
+          </div>
         </CardBody>
         <Divider />
         <CardFooter className="flex flex-wrap justify-center gap-4 bg-gray-200">
           <Button
             className="bg-transparent text-black border-1 border-black"
             color="primary"
-            onPress={guardarFavorito}
+            onPress={() => removeFavorito(mueble.id)}
           >
-            <Heart size={16} color="red" />
+            <small>ELIMINAR DE FAVORITOS</small>
           </Button>
           <Button
             className="bg-transparent text-black border-1 border-black"
             color="primary"
           >
-            <ShoppingCart size={16} />
-          </Button>
-          <Button
-            className="bg-transparent text-black border-1 border-black"
-            color="primary"
-          >
-            <ReceiptText size={16} color="gray" />
+            <small>AGREGAR AL CARRITO</small>
           </Button>
         </CardFooter>
       </Card>
