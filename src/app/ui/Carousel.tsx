@@ -4,28 +4,22 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export const Carousel = () => {
-  const slides = [
-    "/next.svg",
-    "/next.svg",
-    "/next.svg",
-    "/next.svg",
-    "/next.svg",
-    "/next.svg",
-    "/next.svg",
-  ];
+interface CarouselProps {
+  data: { img: string }[];
+}
 
+export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  console.log("data => ", data);
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+      prevIndex === 0 ? data.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+      prevIndex === data.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -39,11 +33,11 @@ export const Carousel = () => {
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
         >
-          {slides.map((slide, index) => (
+          {data.map((slide, index) => (
             <Image
               key={index}
               className="w-full flex-shrink-0"
-              src={slide}
+              src={slide.img}
               alt="Next.js logo"
               width={280}
               height={540} // Este valor controla la altura
@@ -69,7 +63,7 @@ export const Carousel = () => {
 
       {/* Indicators */}
       <div className="flex justify-center mt-4 space-x-2">
-        {slides.map((_, index) => (
+        {data.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}

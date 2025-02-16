@@ -7,7 +7,13 @@ const Home = () => {
   console.log("data => ", data);
   return (
     <div className="w-full h-screen">
-      <Carousel />
+      {data && (
+        <Carousel
+          data={data
+            .filter((item) => typeof item.img === "string") // Filtra solo los que tienen `img` válida
+            .map((item) => ({ img: item.img ?? "" }))}
+        />
+      )}
     </div>
   );
 };

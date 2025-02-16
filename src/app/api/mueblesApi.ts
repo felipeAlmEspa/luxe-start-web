@@ -13,7 +13,6 @@ export const mueblesApi = {
         try {
           // Intentar convertir a JSON
           const jsonData = JSON.parse(jsonMatch[1]);
-          console.log("res = jsonData.data => ", (res = jsonData.data));
           res = jsonData.data;
         } catch (parseError) {
           console.error("Error al parsear JSON:", parseError);
