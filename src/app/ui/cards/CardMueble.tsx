@@ -14,15 +14,8 @@ interface CardMuebleProps {
 }
 export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   return (
-    <Card className="max-w-[400px]">
+    <Card className="max-w-[480px]">
       <CardHeader className="flex gap-3">
-        <Image
-          alt="heroui logo"
-          height={40}
-          radius="sm"
-          src={mueble.img ?? ""}
-          width={40}
-        />
         <div className="flex flex-col">
           <p className="text-md">HeroUI</p>
           <p className="text-small text-default-500">heroui.com</p>
@@ -30,6 +23,13 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
       </CardHeader>
       <Divider />
       <CardBody>
+        <Image
+          alt="heroui logo"
+          width={500}
+          height={200}
+          radius="sm"
+          src={mueble.img ?? ""}
+        />
         <p>Make beautiful websites regardless of your design experience.</p>
       </CardBody>
       <Divider />

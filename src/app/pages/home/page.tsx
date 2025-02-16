@@ -7,18 +7,8 @@ import { Divider } from "@heroui/react";
 const Home = () => {
   const { data } = useMueble();
 
-  const renderItemCard = () => {
-    if (data) {
-      return data.map((item, index) => (
-        <CardMueble key={index} mueble={item} />
-      ));
-    } else {
-      return <></>;
-    }
-  };
-
   return (
-    <div className="w-full h-screen ">
+    <div className="w-full h-[auto] ">
       <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
         {data && (
           <Carousel
@@ -31,7 +21,14 @@ const Home = () => {
       <div className="pt-3">
         <Divider />
       </div>
-      <div>{data && renderItemCard()}</div>
+      <div className="flex flex-wrap justify-center gap-4">
+        {data &&
+          data.map((item, index) => (
+            <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
+              <CardMueble key={index} mueble={item} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
