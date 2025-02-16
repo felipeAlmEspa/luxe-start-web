@@ -119,11 +119,11 @@ const Favoritos = () => {
       </nav>
 
       <Divider />
-      {filtrarData.map((item, index) => (
-        <div key={index} className="w-full sm:w-1/2 p-2">
-          <CardDetalleProducto mueble={item} />
-        </div>
-      ))}
+      <div className="grid grid-cols-2 gap-4 w-full">
+        {filtrarData.map((item, index) => (
+          <CardDetalleProducto key={index} mueble={item} />
+        ))}
+      </div>
     </div>
   );
 };

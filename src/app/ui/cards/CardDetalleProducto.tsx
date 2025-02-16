@@ -31,9 +31,9 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
     addFavorito(mueble);
   };
   return (
-    <>
-      <Card className="">
-        <CardHeader className="flex gap-3">
+    <div className="min-w-1/2">
+      <Card>
+        <CardHeader className="flex gap-3 bg-gray-200">
           <div className="flex flex-col">
             <p className="text-md">
               {mueble.titulo ? mueble.titulo : "Mueble Luxe"}
@@ -44,7 +44,7 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
           </div>
         </CardHeader>
         <Divider />
-        <CardBody>
+        <CardBody className="grid grid-cols-2 gap-4 w-1/2">
           <Image
             alt="heroui logo"
             width={300}
@@ -56,7 +56,7 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
           <p>{mueble.descripcion ? mueble.descripcion : "Sin descripción"}</p>
         </CardBody>
         <Divider />
-        <CardFooter className="flex flex-wrap justify-center gap-4">
+        <CardFooter className="flex flex-wrap justify-center gap-4 bg-gray-200">
           <Button
             className="bg-transparent text-black border-1 border-black"
             color="primary"
@@ -85,6 +85,6 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
           imageUrl={mueble.img}
         />
       )}
-    </>
+    </div>
   );
 };
