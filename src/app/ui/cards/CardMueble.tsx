@@ -5,11 +5,12 @@ import {
   CardBody,
   CardFooter,
   Divider,
-  Link,
   Image,
   useDisclosure,
+  Button,
 } from "@heroui/react";
 import { ModalImagen } from "../modals/Modalmagen";
+import { Heart, ReceiptText, ShoppingCart } from "lucide-react";
 
 interface CardMuebleProps {
   mueble: IMueble;
@@ -22,7 +23,7 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   };
   return (
     <>
-      <Card className="max-w-[500px] w-[320px]">
+      <Card className="max-w-[500px] w-[330px]">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
             <p className="text-md">
@@ -43,17 +44,28 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
             src={mueble.img ?? ""}
             onClick={() => verImagen()}
           />
-          <p>Make beautiful websites regardless of your design experience.</p>
+          <p>{mueble.descripcion ? mueble.descripcion : "Sin descripción"}</p>
         </CardBody>
         <Divider />
-        <CardFooter>
-          <Link
-            isExternal
-            showAnchorIcon
-            href="https://github.com/heroui-inc/heroui"
+        <CardFooter className="flex flex-wrap justify-center gap-4">
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
           >
-            Visit source code on GitHub.
-          </Link>
+            <Heart size={16} color="red" />
+          </Button>
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
+          >
+            <ShoppingCart size={16} />
+          </Button>
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
+          >
+            <ReceiptText size={16} color="gray" />
+          </Button>
         </CardFooter>
       </Card>
       {isOpen && mueble.img && (
