@@ -43,7 +43,7 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
   );
   const limpiarSelect = useCallback(() => onSelect(null), [onSelect]);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-w-[150px]">
       <span>{title}</span>
       <div className="flex flex-row items-center justify-between gap-1">
         <Dropdown>

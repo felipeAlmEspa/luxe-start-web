@@ -28,12 +28,11 @@ export const MyHeader = () => {
   }, []);
 
   const navegar = useCallback(() => {
-    console.log("Test ssssss1111111111 passed");
     router.push("/pages/favoritos");
   }, [router]);
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
+    <div className="fixe top-0 left-0 w-full z-50 bg-white shadow-md">
       <nav className="bg-white">
         <div className="flex justify-between pl-3 pr-3">
           <div className="text-black grid grid-cols-3 gap-2">
@@ -45,8 +44,8 @@ export const MyHeader = () => {
           </div>
         </div>
         <Divider />
-        <div className="w-full">
-          <div className="flex pt-3 flex-col sm:flex-row">
+        <div className="w-full grid">
+          <div className="flex pb-2 pt-2 flex-col sm:flex-row">
             <div className="w-full sm:w-1/3 text-center"></div>
             <div className="w-full sm:w-1/3 text-center">
               <h1 className="text-xl sm:text-3xl font-serif">MUEBLERÍA LUXE</h1>

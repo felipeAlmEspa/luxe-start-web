@@ -14,7 +14,7 @@ export type TypeFavoritosStore = {
 
 export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
   state: {
-    listaFavoritos: LocalStorageManager.getItem<IMueble[]>("muebles") ?? [],
+    listaFavoritos: [],
   },
 
   setState: (newState: Partial<TypeFavoritosStore["state"]>) =>

@@ -1,43 +1,90 @@
+import { IMueble } from "../../../../ts/models/IMueble";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Divider,
-  Link,
   Image,
+  useDisclosure,
+  Button,
 } from "@heroui/react";
+import { ModalImagen } from "../modals/Modalmagen";
+import { Heart, ReceiptText, ShoppingCart } from "lucide-react";
+import { LocalStorageManager } from "../../../../ts/local-storage/LocalStorageManager";
+import { useFavoritosStore } from "@/store/useFavoritosStore";
 
-export const CardDetalleProducto = () => {
+interface CardDetalleProductoProps {
+  mueble: IMueble;
+}
+export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
+  mueble,
+}) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { addFavorito } = useFavoritosStore();
+
+  const verImagen = () => {
+    onOpen();
+  };
+  const guardarFavorito = () => {
+    LocalStorageManager.addMueble(mueble);
+    addFavorito(mueble);
+  };
   return (
-    <Card className="max-w-[400px]">
-      <CardHeader className="flex gap-3">
-        <Image
-          alt="heroui logo"
-          height={40}
-          radius="sm"
-          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-          width={40}
+    <>
+      <Card className="">
+        <CardHeader className="flex gap-3">
+          <div className="flex flex-col">
+            <p className="text-md">
+              {mueble.titulo ? mueble.titulo : "Mueble Luxe"}
+            </p>
+            <p className="text-small text-default-500">
+              {mueble.color ? mueble.color : "Mueble Luxe"}
+            </p>
+          </div>
+        </CardHeader>
+        <Divider />
+        <CardBody>
+          <Image
+            alt="heroui logo"
+            width={300}
+            height={220}
+            radius="sm"
+            src={mueble.img ?? ""}
+            onClick={() => verImagen()}
+          />
+          <p>{mueble.descripcion ? mueble.descripcion : "Sin descripción"}</p>
+        </CardBody>
+        <Divider />
+        <CardFooter className="flex flex-wrap justify-center gap-4">
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
+            onPress={guardarFavorito}
+          >
+            <Heart size={16} color="red" />
+          </Button>
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
+          >
+            <ShoppingCart size={16} />
+          </Button>
+          <Button
+            className="bg-transparent text-black border-1 border-black"
+            color="primary"
+          >
+            <ReceiptText size={16} color="gray" />
+          </Button>
+        </CardFooter>
+      </Card>
+      {isOpen && mueble.img && (
+        <ModalImagen
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          imageUrl={mueble.img}
         />
-        <div className="flex flex-col">
-          <p className="text-md">HeroUI</p>
-          <p className="text-small text-default-500">heroui.com</p>
-        </div>
-      </CardHeader>
-      <Divider />
-      <CardBody>
-        <p>Make beautiful websites regardless of your design experience.</p>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <Link
-          isExternal
-          showAnchorIcon
-          href="https://github.com/heroui-inc/heroui"
-        >
-          Visit source code on GitHub.
-        </Link>
-      </CardFooter>
-    </Card>
+      )}
+    </>
   );
 };

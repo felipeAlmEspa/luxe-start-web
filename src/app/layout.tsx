@@ -31,8 +31,8 @@ export default function RootLayout({
         <Providers>
           <div className="min-h-screen flex flex-col">
             <MyHeader />
-            <main className="flex-1 p-4 mt-[60px]">{children}</main>{" "}
-            {/* Ajusta mt según la altura de tu encabezado */}
+            {/* <div className="w-full h-12 sm:h-0"></div> */}
+            <main className="flex-1 p-4">{children}</main>
             <MyFooter />
           </div>
         </Providers>

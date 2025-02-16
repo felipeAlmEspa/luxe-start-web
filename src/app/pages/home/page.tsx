@@ -11,7 +11,7 @@ const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
   const [filtroInput, setFiltroInput] = useState<string | null>(null);
-  const { data } = useMueble();
+  const { data, isLoading } = useMueble();
 
   const obtenerColores = useMemo(() => {
     if (data) {
@@ -84,60 +84,67 @@ const Home = () => {
       return [];
     }
   }, [data, filtroCategoria, filtroColores, filtroInput]);
-  return (
-    <div className="w-full h-[auto] ">
-      <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
-        {data && (
-          <Carousel
-            data={data
-              .filter((item) => typeof item.img === "string") // Filtra solo los que tienen `img` válida
-              .map((item) => ({ img: item.img ?? "" }))}
+  if (isLoading) {
+    return <></>;
+  } else {
+    return (
+      <div className="w-full h-[auto] ">
+        <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
+          {data && (
+            <Carousel
+              data={data
+                .filter((item) => typeof item.img === "string") // Filtra solo los que tienen `img` válida
+                .map((item) => ({ img: item.img ?? "" }))}
+            />
+          )}
+        </div>
+        <div className="pt-3">
+          <Divider />
+        </div>
+        <nav className="flex flex-col sm:flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
+          <Input
+            className="w-full sm:w-1/4"
+            label="Buscar"
+            labelPlacement="outside"
+            placeholder="Ingresar término de búsqueda"
+            startContent={
+              <Search className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            }
+            onChange={(v) => setFiltroInput(v.target.value)}
+            type="email"
           />
-        )}
-      </div>
-      <div className="pt-3">
-        <Divider />
-      </div>
-      <nav className="flex flex-col sm:flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
-        <Input
-          className="w-full sm:w-1/4"
-          label="Buscar"
-          labelPlacement="outside"
-          placeholder="Ingresar término de búsqueda"
-          startContent={
-            <Search className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-          }
-          onChange={(v) => setFiltroInput(v.target.value)}
-          type="email"
-        />
-        <FiltroMueble
-          data={obtenerCategorias}
-          onSelect={setFiltroCategoria}
-          valor={filtroCategoria}
-          placeholder="Seleccionar una opción"
-          borderColor="border-black"
-          title="Filtrar por categoría"
-        />
-        <FiltroMueble
-          data={obtenerColores}
-          onSelect={setFiltroColores}
-          valor={filtroColores}
-          placeholder="Seleccionar una opción"
-          borderColor="border-black"
-          title="Filtrar por color"
-        />
-      </nav>
+          <FiltroMueble
+            data={obtenerCategorias}
+            onSelect={setFiltroCategoria}
+            valor={filtroCategoria}
+            placeholder="Seleccionar una opción"
+            borderColor="border-black"
+            title="Filtrar por categoría"
+          />
+          <FiltroMueble
+            data={obtenerColores}
+            onSelect={setFiltroColores}
+            valor={filtroColores}
+            placeholder="Seleccionar una opción"
+            borderColor="border-black"
+            title="Filtrar por color"
+          />
+        </nav>
 
-      <div className="flex flex-wrap justify-center gap-10">
-        {filtrarData &&
-          filtrarData.map((item, index) => (
-            <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
-              <CardMueble key={index} mueble={item} />
-            </div>
-          ))}
+        <div className="flex flex-wrap justify-center gap-10">
+          {filtrarData &&
+            filtrarData.map((item, index) => (
+              <div
+                key={index}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2"
+              >
+                <CardMueble key={index} mueble={item} />
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Home;
