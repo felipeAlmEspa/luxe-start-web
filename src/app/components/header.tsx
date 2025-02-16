@@ -9,13 +9,15 @@ import {
   SharedSelection,
   Divider,
 } from "@heroui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
 
 export const MyHeader = () => {
   const [selectedKeys, setSelectedKeys] = useState("Mis muebles");
-  const { listaFavoritos } = useFavoritosStore((state) => state.state);
-  useEffect(() => {}, []);
+
+  const listaFavoritos = useFavoritosStore(
+    (state) => state.state.listaFavoritos
+  );
 
   const selectedValue = useCallback((keys: SharedSelection) => {
     if (keys instanceof Set) {
