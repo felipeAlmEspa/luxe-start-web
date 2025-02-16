@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export", // Exporta como HTML estático
-  basePath: "/luxe-prod", // Reemplaza con el nombre de tu repo en GitHub
+  basePath: "/luxe-prod", // El nombre del repositorio en GitHub
+  assetPrefix: "/luxe-prod", // Asegura que los recursos carguen desde la ruta correcta
   images: {
     unoptimized: true, // Evita la optimización de imágenes en GitHub Pages
     remotePatterns: [
