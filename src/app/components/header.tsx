@@ -34,7 +34,7 @@ export const MyHeader = () => {
       </div>
       <Divider />
       <div className="w-full">
-        <div className="flex pt-3 pb-3 flex-col sm:flex-row">
+        <div className="flex pt-3 flex-col sm:flex-row">
           <div className="w-full sm:w-1/3 text-center"></div>
           <div className="w-full sm:w-1/3 text-center">
             <h1 className="text-xl sm:text-3xl font-serif">MUEBLERÍA LUXE</h1>

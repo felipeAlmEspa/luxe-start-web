@@ -10,7 +10,6 @@ interface CarouselProps {
 
 export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log("data => ", data);
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? data.length - 1 : prevIndex - 1
@@ -24,11 +23,11 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto">
+    <div className="relative  w-[400px] justify-center">
       {/* Slide container */}
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden rounded-2xl w-full">
         <div
-          className="flex transition-transform duration-500 h-[380px]"
+          className="flex transition-transform duration-500 h-[400px]"
           style={{
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
@@ -39,8 +38,8 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
               className="w-full flex-shrink-0"
               src={slide.img}
               alt="Next.js logo"
-              width={280}
-              height={540} // Este valor controla la altura
+              width={200}
+              height={200} // Este valor controla la altura
               priority
             />
           ))}
