@@ -4,13 +4,13 @@ import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
 import { Divider, Input } from "@heroui/react";
-import { MailIcon } from "lucide-react";
+import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
-
+  const [filtroInput, setFiltroInput] = useState<string | null>(null);
   const { data } = useMueble();
 
   const obtenerColores = useMemo(() => {
@@ -62,12 +62,28 @@ const Home = () => {
           (item) => item.color && item.color === filtroColores
         );
       }
+      if (filtroCategoria) {
+        temp = temp.filter(
+          (item) => item.categoria && item.categoria === filtroCategoria
+        );
+      }
+      if (filtroInput && filtroInput.length > 0) {
+        const filtro = filtroInput.toUpperCase();
+        temp = temp.filter(
+          (item) =>
+            (item.descripcion &&
+              item.descripcion.toUpperCase().includes(filtro)) ||
+            (item.color && item.color.toUpperCase().includes(filtro)) ||
+            (item.categoria && item.categoria.toUpperCase().includes(filtro)) ||
+            (item.etiqueta && item.etiqueta.toUpperCase().includes(filtro))
+        );
+      }
 
       return temp;
     } else {
       return [];
     }
-  }, [data, filtroColores]);
+  }, [data, filtroCategoria, filtroColores, filtroInput]);
   return (
     <div className="w-full h-[auto] ">
       <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
@@ -82,29 +98,33 @@ const Home = () => {
       <div className="pt-3">
         <Divider />
       </div>
-      <nav className="flex flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
+      <nav className="flex flex-col sm:flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
         <Input
-          label="Email"
+          className="w-full sm:w-1/4"
+          label="Buscar"
           labelPlacement="outside"
-          placeholder="you@example.com"
+          placeholder="Ingresar término de búsqueda"
           startContent={
-            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            <Search className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
           }
+          onChange={(v) => setFiltroInput(v.target.value)}
           type="email"
         />
         <FiltroMueble
           data={obtenerCategorias}
           onSelect={setFiltroCategoria}
           valor={filtroCategoria}
-          placeholder="Filtrar por categoria"
+          placeholder="Seleccionar una opción"
           borderColor="border-black"
+          title="Filtrar por categoría"
         />
         <FiltroMueble
           data={obtenerColores}
           onSelect={setFiltroColores}
           valor={filtroColores}
-          placeholder="Filtrar por color"
+          placeholder="Seleccionar una opción"
           borderColor="border-black"
+          title="Filtrar por color"
         />
       </nav>
 

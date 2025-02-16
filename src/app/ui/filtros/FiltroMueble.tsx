@@ -9,6 +9,7 @@ import {
 } from "@heroui/react";
 import { useCallback } from "react";
 import { IClaveValor } from "../../../../ts/models/IClaveValor";
+import { X } from "lucide-react";
 
 interface FiltroMuebleProps {
   onSelect: (item: string | null) => void;
@@ -16,6 +17,7 @@ interface FiltroMuebleProps {
   data: IClaveValor[];
   placeholder?: string;
   borderColor?: string;
+  title?: string;
 }
 export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
   onSelect,
@@ -23,6 +25,7 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
   data,
   placeholder = "Seleccionar una opción",
   borderColor = "border-gray-500",
+  title = "",
 }) => {
   const selectedValue = useCallback(
     (keys: SharedSelection) => {
@@ -38,44 +41,60 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
     },
     [onSelect]
   );
+  const limpiarSelect = useCallback(() => onSelect(null), [onSelect]);
   return (
-    <>
-      <Dropdown>
-        <DropdownTrigger>
-          <Button
-            variant="bordered"
-            color="default"
-            className={`border ${borderColor}`}
+    <div className="flex flex-col">
+      <span>{title}</span>
+      <div className="flex flex-row items-center justify-between gap-1">
+        <Dropdown>
+          <DropdownTrigger>
+            <Button
+              variant="bordered"
+              color="default"
+              className={`border ${borderColor} uppercase text-[11px] text-gray-800`}
+            >
+              {valor ?? placeholder}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu
+            disallowEmptySelection
+            aria-label="waSingle selection example"
+            selectedKeys={valor ?? undefined}
+            selectionMode="single"
+            variant={"bordered"}
+            onSelectionChange={selectedValue}
           >
-            {valor ?? placeholder}
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          disallowEmptySelection
-          aria-label="waSingle selection example"
-          selectedKeys={valor ?? undefined}
-          selectionMode="single"
-          variant={"bordered"}
-          onSelectionChange={selectedValue}
-        >
-          <DropdownSection>
-            <DropdownItem key={"_TODOS"}>
-              <div className="flex justify-between">
-                <small>Todos</small>
-              </div>
-            </DropdownItem>
-          </DropdownSection>
-          <DropdownSection>
-            {data.map((item) => (
-              <DropdownItem key={item.valor}>
+            <DropdownSection>
+              <DropdownItem key={"_TODOS"}>
                 <div className="flex justify-between">
-                  <small>{item.valor}</small>
+                  <small>Todos</small>
                 </div>
               </DropdownItem>
-            ))}
-          </DropdownSection>
-        </DropdownMenu>
-      </Dropdown>
-    </>
+            </DropdownSection>
+            <DropdownSection>
+              {data.map((item) => (
+                <DropdownItem key={item.valor}>
+                  <div className="flex justify-between">
+                    <small className="uppercase">{item.valor}</small>
+                  </div>
+                </DropdownItem>
+              ))}
+            </DropdownSection>
+          </DropdownMenu>
+        </Dropdown>
+        {valor && (
+          <Button
+            isIconOnly
+            aria-label="Like"
+            color="default"
+            size="sm"
+            className="w-6 h-6 p-1"
+            onPress={limpiarSelect}
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
