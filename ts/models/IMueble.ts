@@ -10,4 +10,5 @@ export interface IMueble {
   alto: number | null;
   ancho: number | null;
   largo: number | null;
+  categoria: string | null;
 }

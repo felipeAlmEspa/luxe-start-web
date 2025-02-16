@@ -1,6 +1,5 @@
 "use client";
 import { Heart, ShoppingCart } from "lucide-react";
-import { Divider } from "../ui/Divider";
 import {
   Dropdown,
   DropdownTrigger,
@@ -8,6 +7,7 @@ import {
   DropdownItem,
   Button,
   SharedSelection,
+  Divider,
 } from "@heroui/react";
 import { useCallback, useState } from "react";
 

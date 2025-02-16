@@ -1,9 +1,22 @@
 "use client";
 import { useMueble } from "@/app/service/muebles/useMueble";
+import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
+import { Divider } from "@heroui/react";
 
 const Home = () => {
   const { data } = useMueble();
+
+  const renderItemCard = () => {
+    if (data) {
+      return data.map((item, index) => (
+        <CardMueble key={index} mueble={item} />
+      ));
+    } else {
+      return <></>;
+    }
+  };
+
   return (
     <div className="w-full h-screen ">
       <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
@@ -15,6 +28,10 @@ const Home = () => {
           />
         )}
       </div>
+      <div className="pt-3">
+        <Divider />
+      </div>
+      <div>{data && renderItemCard()}</div>
     </div>
   );
 };
