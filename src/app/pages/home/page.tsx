@@ -3,20 +3,23 @@ import { useMueble } from "@/app/service/muebles/useMueble";
 import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
-import { Divider } from "@heroui/react";
+import { Divider, Input } from "@heroui/react";
+import { MailIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
+  const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
+
   const { data } = useMueble();
 
   const obtenerColores = useMemo(() => {
     if (data) {
       return data
-        .filter((item) => item.color) // Filtra solo los colores no nulos
+        .filter((item) => item.color)
         .map((item) => ({
-          clave: item.color!, // Asegura que item.color nunca sea null (usando el operador de aserción no-null)
-          valor: item.color!, // Asegura que item.color nunca sea null
+          clave: item.color!,
+          valor: item.color!,
         }))
         .filter(
           (value, index, self) =>
@@ -27,9 +30,44 @@ const Home = () => {
         )
         .filter((item) => item.clave && item.valor); // Filtra si clave o valor son nulos o vacíos
     }
-    return []; // Si no hay datos, retorna un array vacío
+    return [];
   }, [data]);
 
+  const obtenerCategorias = useMemo(() => {
+    if (data) {
+      return data
+        .filter((item) => item.categoria)
+        .map((item) => ({
+          clave: item.categoria!,
+          valor: item.categoria!,
+        }))
+        .filter(
+          (value, index, self) =>
+            index ===
+            self.findIndex(
+              (t) => t.clave === value.clave // Filtra los colores duplicados
+            )
+        )
+        .filter((item) => item.clave && item.valor); // Filtra si clave o valor son nulos o vacíos
+    }
+    return [];
+  }, [data]);
+
+  const filtrarData = useMemo(() => {
+    if (data) {
+      let temp = data;
+
+      if (filtroColores) {
+        temp = temp.filter(
+          (item) => item.color && item.color === filtroColores
+        );
+      }
+
+      return temp;
+    } else {
+      return [];
+    }
+  }, [data, filtroColores]);
   return (
     <div className="w-full h-[auto] ">
       <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
@@ -45,11 +83,20 @@ const Home = () => {
         <Divider />
       </div>
       <nav className="flex flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
+        <Input
+          label="Email"
+          labelPlacement="outside"
+          placeholder="you@example.com"
+          startContent={
+            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          type="email"
+        />
         <FiltroMueble
-          data={obtenerColores}
-          onSelect={setFiltroColores}
-          valor={filtroColores}
-          placeholder="Filtrar por color"
+          data={obtenerCategorias}
+          onSelect={setFiltroCategoria}
+          valor={filtroCategoria}
+          placeholder="Filtrar por categoria"
           borderColor="border-black"
         />
         <FiltroMueble
@@ -62,8 +109,8 @@ const Home = () => {
       </nav>
 
       <div className="flex flex-wrap justify-center gap-10">
-        {data &&
-          data.map((item, index) => (
+        {filtrarData &&
+          filtrarData.map((item, index) => (
             <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
               <CardMueble key={index} mueble={item} />
             </div>

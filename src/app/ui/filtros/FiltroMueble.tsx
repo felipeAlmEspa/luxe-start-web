@@ -11,7 +11,7 @@ import { useCallback } from "react";
 import { IClaveValor } from "../../../../ts/models/IClaveValor";
 
 interface FiltroMuebleProps {
-  onSelect: (item: string) => void;
+  onSelect: (item: string | null) => void;
   valor: string | null;
   data: IClaveValor[];
   placeholder?: string;
@@ -28,6 +28,11 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
     (keys: SharedSelection) => {
       if (keys instanceof Set) {
         const selectedKey = [...keys][0];
+        if (selectedKey.toString() === "_TODOS") {
+          onSelect(null);
+          return;
+        }
+
         onSelect(selectedKey.toString());
       }
     },
@@ -54,7 +59,7 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
           onSelectionChange={selectedValue}
         >
           <DropdownSection>
-            <DropdownItem key={"Todos"}>
+            <DropdownItem key={"_TODOS"}>
               <div className="flex justify-between">
                 <small>Todos</small>
               </div>

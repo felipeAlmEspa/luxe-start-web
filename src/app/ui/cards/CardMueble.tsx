@@ -30,7 +30,7 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
               {mueble.titulo ? mueble.titulo : "Mueble Luxe"}
             </p>
             <p className="text-small text-default-500">
-              {mueble.etiqueta ? mueble.etiqueta : "Mueble Luxe"}
+              {mueble.color ? mueble.color : "Mueble Luxe"}
             </p>
           </div>
         </CardHeader>
