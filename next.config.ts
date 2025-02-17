@@ -7,14 +7,6 @@ const nextConfig = {
   images: { unoptimized: true }, // Necesario en exportación estática
   basePath: "/luxe-start-web", // El nombre del repo en GitHub Pages
   assetPrefix: "/luxe-start-web/", // Prefijo para los recursos estáticos
-  // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
-  // trailingSlash: true,
-
-  // Optional: Prevent automatic `/me` -> `/me/`, instead preserve `href`
-  // skipTrailingSlashRedirect: true,
-
-  // Optional: Change the output directory `out` -> `dist`
-  // distDir: 'dist',
 };
 
 module.exports = nextConfig;
