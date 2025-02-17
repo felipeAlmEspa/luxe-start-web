@@ -20,10 +20,12 @@ export const mueblesApi = {
         }
       } else {
         console.error("No se encontró contenido JSON válido en el <pre>");
+        alert("Error");
         res = [];
       }
       return res;
     } catch (error) {
+      alert("Error" + JSON.stringify(error));
       console.error("Error al obtener los datos:", error);
       return [];
     }

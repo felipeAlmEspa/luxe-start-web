@@ -85,7 +85,7 @@ const Home = () => {
     }
   }, [data, filtroCategoria, filtroColores, filtroInput]);
   if (isLoading) {
-    return <></>;
+    return <div>Cargando..</div>;
   } else {
     return (
       <div className="w-full h-[auto] ">
