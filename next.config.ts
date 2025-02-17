@@ -2,9 +2,11 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  output: "export",
-  images: { unoptimized: true },
-  basePath: "/luxe-start-web/docs",
+  output: "export", // Exportar como sitio estático
+  trailingSlash: true, // Agregar "/" al final de las URLs
+  images: { unoptimized: true }, // Necesario en exportación estática
+  basePath: "/luxe-start-web", // El nombre del repo en GitHub Pages
+  assetPrefix: "/luxe-start-web/", // Prefijo para los recursos estáticos
   // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
   // trailingSlash: true,
 
