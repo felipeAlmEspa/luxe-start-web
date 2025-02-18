@@ -11,15 +11,21 @@ import {
 } from "@heroui/react";
 import { ModalImagen } from "../modals/Modalmagen";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { useCarritoStore } from "@/store/useCarritoStore";
 
 interface CardDetalleProductoProps {
   mueble: IMueble;
+  pagina: string;
 }
 export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
   mueble,
+  pagina,
 }) => {
+  const addCarrito = useCarritoStore((state) => state.addCarrito);
   const removeFavorito = useFavoritosStore((state) => state.removeFavorito);
+  const removeCarrito = useCarritoStore((state) => state.removeCarrito);
+  const carritoData = useCarritoStore((state) => state.state.listaCarrito);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const verImagen = () => {
@@ -32,6 +38,22 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
 
     return (mueble.precio * mueble.descuento) / 100;
   }, [mueble.descuento, mueble.precio]);
+
+  const guardarCarrito = useCallback(() => {
+    const temp = carritoData.find((item) => item.id === mueble.id);
+    if (!temp) {
+      addCarrito(mueble);
+    }
+  }, [addCarrito, carritoData, mueble]);
+
+  const muebleSeleccionadoCarrito = useMemo(() => {
+    const temp = carritoData.find((item) => item.id === mueble.id);
+    if (temp) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [carritoData, mueble.id]);
 
   return (
     <div className="min-w-1/2">
@@ -114,19 +136,34 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
         </CardBody>
         <Divider />
         <CardFooter className="flex flex-wrap justify-center gap-4 bg-gray-200">
-          <Button
-            className="bg-transparent text-black border-1 border-black"
-            color="primary"
-            onPress={() => removeFavorito(mueble.id)}
-          >
-            <small>ELIMINAR DE FAVORITOS</small>
-          </Button>
-          <Button
-            className="bg-transparent text-black border-1 border-black"
-            color="primary"
-          >
-            <small>AGREGAR AL CARRITO</small>
-          </Button>
+          {pagina === "FAVORITOS" && (
+            <Button
+              className="bg-transparent text-black border-1 border-black"
+              color="primary"
+              onPress={() => removeFavorito(mueble.id)}
+            >
+              <small>ELIMINAR DE FAVORITOS</small>
+            </Button>
+          )}
+          {(pagina === "FAVORITOS" || pagina === "DETALLE") &&
+            muebleSeleccionadoCarrito == false && (
+              <Button
+                className="bg-transparent text-black border-1 border-black"
+                color="primary"
+                onPress={guardarCarrito}
+              >
+                <small>AGREGAR AL CARRITO</small>
+              </Button>
+            )}
+          {pagina === "CARRITO" && (
+            <Button
+              className="bg-transparent text-black border-1 border-black"
+              color="primary"
+              onPress={() => removeCarrito(mueble.id)}
+            >
+              <small>ELIMINAR DEL CARRITO</small>
+            </Button>
+          )}
         </CardFooter>
       </Card>
       {isOpen && mueble.img && (

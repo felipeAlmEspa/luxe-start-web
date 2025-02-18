@@ -119,7 +119,7 @@ const Carrito = () => {
       <Divider />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         {filtrarData.map((item, index) => (
-          <CardDetalleProducto key={index} mueble={item} />
+          <CardDetalleProducto key={index} mueble={item} pagina="CARRITO" />
         ))}
       </div>
     </div>
