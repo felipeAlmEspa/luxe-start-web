@@ -17,7 +17,7 @@ export const ModalCorreo: React.FC<ModalImagenProps> = ({
   isOpen,
   onOpenChange,
 }) => {
-  const listaCarrito = useCarritoStore((state) => state.state.listaCarrito);
+  const listaCarrito = useCarritoStore((state) => state.state);
   return (
     <>
       <Modal
@@ -30,7 +30,7 @@ export const ModalCorreo: React.FC<ModalImagenProps> = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
-              <ModalBody>{listaCarrito.length}</ModalBody>
+              <ModalBody></ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cerrar
