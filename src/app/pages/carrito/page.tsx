@@ -1,12 +1,14 @@
 "use client";
 import { CardDetalleProducto } from "@/app/ui/cards/CardDetalleProducto";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
+import { ModalCorreo } from "@/app/ui/modals/ModalCorreo";
 import { useCarritoStore } from "@/store/useCarritoStore";
-import { Divider, Input } from "@heroui/react";
+import { Button, Divider, Input, useDisclosure } from "@heroui/react";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 const Carrito = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const listaCarrito = useCarritoStore((state) => state.state.listaCarrito);
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
   const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
@@ -114,6 +116,11 @@ const Carrito = () => {
           borderColor="border-black"
           title="Filtrar por color"
         />
+        <div className="pt-5 h-full grid place-items-center">
+          <Button color="primary" onPress={onOpen}>
+            Comprar todo
+          </Button>
+        </div>
       </nav>
 
       <Divider />
@@ -122,6 +129,7 @@ const Carrito = () => {
           <CardDetalleProducto key={index} mueble={item} pagina="CARRITO" />
         ))}
       </div>
+      {isOpen && <ModalCorreo isOpen={isOpen} onOpenChange={onOpenChange} />}
     </div>
   );
 };
