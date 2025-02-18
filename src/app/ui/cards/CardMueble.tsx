@@ -11,23 +11,73 @@ import {
 } from "@heroui/react";
 import { ModalImagen } from "../modals/Modalmagen";
 import { Heart, ReceiptText, ShoppingCart } from "lucide-react";
-import { LocalStorageManager } from "../../../../ts/local-storage/LocalStorageManager";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
+import { useMueble } from "@/app/service/muebles/useMueble";
+import { useCallback, useMemo } from "react";
+import { useCarritoStore } from "@/store/useCarritoStore";
 
 interface CardMuebleProps {
   mueble: IMueble;
 }
 export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data } = useMueble();
+  const favoritos = useFavoritosStore((state) => state.state.listaFavoritos);
   const { addFavorito } = useFavoritosStore();
+  const { removeFavorito } = useFavoritosStore();
+  const carritoData = useCarritoStore((state) => state.state.listaCarrito);
+  const { addCarrito } = useCarritoStore();
+  const { removeCarrito } = useCarritoStore();
 
   const verImagen = () => {
     onOpen();
   };
-  const guardarFavorito = () => {
-    LocalStorageManager.addMueble(mueble);
-    addFavorito(mueble);
-  };
+  const guardarFavorito = useCallback(() => {
+    const temp = favoritos.find((item) => item.id === mueble.id);
+    if (temp) {
+      removeFavorito(mueble.id);
+    } else {
+      addFavorito(mueble);
+    }
+  }, [addFavorito, favoritos, mueble, removeFavorito]);
+
+  const guardarCarrito = useCallback(() => {
+    const temp = carritoData.find((item) => item.id === mueble.id);
+    if (temp) {
+      removeCarrito(mueble.id);
+    } else {
+      addCarrito(mueble);
+    }
+  }, [addCarrito, carritoData, mueble, removeCarrito]);
+
+  const muebleSeleccionadoFavorito = useMemo(() => {
+    const temp = favoritos.find((item) => item.id === mueble.id);
+    if (temp && data) {
+      const tempDos = data.find((item) => item.id === temp.id);
+      if (tempDos) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }, [data, favoritos, mueble.id]);
+
+  const muebleSeleccionadoCarrito = useMemo(() => {
+    const temp = carritoData.find((item) => item.id === mueble.id);
+    if (temp && data) {
+      const tempDos = data.find((item) => item.id === temp.id);
+      if (tempDos) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }, [carritoData, data, mueble.id]);
+
   return (
     <>
       <Card className="w-[320px] max-w-[500px] min-w-[220px]">
@@ -61,13 +111,22 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
             color="primary"
             onPress={guardarFavorito}
           >
-            <Heart size={16} color="red" />
+            {muebleSeleccionadoFavorito === true ? (
+              <Heart fill="#d36666" size={16} color="#d36666" />
+            ) : (
+              <Heart size={16} color="red" />
+            )}
           </Button>
           <Button
+            onPress={guardarCarrito}
             className="bg-transparent text-black border-1 border-black"
             color="primary"
           >
-            <ShoppingCart size={16} />
+            {muebleSeleccionadoCarrito === true ? (
+              <ShoppingCart fill="#0a65c1" size={16} color="#0a65c1" />
+            ) : (
+              <ShoppingCart size={16} color="#484848" />
+            )}
           </Button>
           <Button
             className="bg-transparent text-black border-1 border-black"

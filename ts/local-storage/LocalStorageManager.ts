@@ -1,6 +1,12 @@
 import { IMueble } from "../models/IMueble";
 
-type StorageKey = "mueble" | "muebles" | "user" | "theme" | "settings"; // Solo claves permitidas
+type StorageKey =
+  | "mueble"
+  | "muebles"
+  | "muebles.carrito"
+  | "user"
+  | "theme"
+  | "settings"; // Solo claves permitidas
 
 export class LocalStorageManager {
   static setItem<T>(key: StorageKey, value: T): void {

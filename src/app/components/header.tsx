@@ -12,20 +12,26 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
 import { useRouter } from "next/navigation";
+import { useCarritoStore } from "@/store/useCarritoStore";
 
 export const MyHeader = () => {
   const [selectedKeys, setSelectedKeys] = useState("Mis muebles");
   const router = useRouter();
   const cargaInicial = useFavoritosStore((state) => state.cargaInicial);
+  const cargaInicialCarrito = useCarritoStore(
+    (state) => state.cargaInicialCarrito
+  );
 
   useEffect(() => {
     cargaInicial();
-  }, [cargaInicial]);
+    cargaInicialCarrito();
+  }, [cargaInicial, cargaInicialCarrito]);
 
   const listaFavoritos = useFavoritosStore(
     (state) => state.state.listaFavoritos
   );
 
+  const listaCarrito = useCarritoStore((state) => state.state.listaCarrito);
   const selectedValue = useCallback((keys: SharedSelection) => {
     if (keys instanceof Set) {
       const selectedKey = [...keys][0];
@@ -90,10 +96,18 @@ export const MyHeader = () => {
                         )}
                       </div>
                     </DropdownItem>
-                    <DropdownItem key="Carrito">
-                      <div className="flex justify-between">
+                    <DropdownItem
+                      key="Carrito"
+                      onPress={() => router.push("/pages/carrito")}
+                    >
+                      <div className="flex justify-between relative">
                         <small>Carrito</small>
-                        <ShoppingCart />
+                        <ShoppingCart className="w-7 h-7" />
+                        {listaCarrito.length > 0 && (
+                          <span className="absolute text-center -top-1 -right-2 bg-primary text-white text-xs font-bold px-1 py-1 rounded-full w-6 h-6">
+                            {listaCarrito.length}
+                          </span>
+                        )}
                       </div>
                     </DropdownItem>
                   </DropdownMenu>
@@ -114,9 +128,18 @@ export const MyHeader = () => {
                   )}
                 </Button>
 
-                <Button className="bg-transparent text-black" color="primary">
+                <Button
+                  className="bg-transparent text-black relative"
+                  color="primary"
+                  onPress={() => router.push("/pages/carrito")}
+                >
                   <small>Carrito</small>
-                  <ShoppingCart />
+                  <ShoppingCart className="w-7 h-7" />
+                  {listaCarrito.length > 0 && (
+                    <span className="absolute top-1 right-2 bg-primary text-white text-xs font-bold px-1 py-1 rounded-full w-6 h-6">
+                      {listaCarrito.length}
+                    </span>
+                  )}
                 </Button>
               </div>
             </div>
