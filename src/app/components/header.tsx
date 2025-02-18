@@ -44,7 +44,7 @@ export const MyHeader = () => {
   }, [router]);
 
   return (
-    <div className="fixe top-0 left-0 w-full z-50 bg-white shadow-md">
+    <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <nav className="bg-white">
         <div className="flex justify-between pl-3 pr-3">
           <div className="text-black grid grid-cols-3 gap-2">
