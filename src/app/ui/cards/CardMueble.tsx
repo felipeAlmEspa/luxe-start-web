@@ -80,15 +80,15 @@ export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
 
   return (
     <>
-      <Card className="w-[320px] max-w-[500px] min-w-[220px]">
+      <Card className="shadow-xl w-[320px] max-w-[500px] min-w-[220px] border-1 border-gray-300">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
-            <p className="text-md">
+            <small className="text-xs">
               {mueble.titulo ? mueble.titulo : "Mueble Luxe"}
-            </p>
-            <p className="text-small text-default-500">
+            </small>
+            <small className="text-xss text-default-500">
               {mueble.color ? mueble.color : "Mueble Luxe"}
-            </p>
+            </small>
           </div>
         </CardHeader>
         <Divider />

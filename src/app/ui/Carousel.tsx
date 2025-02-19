@@ -55,7 +55,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   };
 
   return (
-    <div className="relative  w-[400px] justify-center">
+    <div className="relative  w-[400px] justify-center pb-2">
       {/* Slide container */}
       <div className="overflow-hidden rounded-2xl w-full">
         <div
