@@ -58,7 +58,7 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
   return (
     <div className="min-w-1/2">
       <Card>
-        <CardHeader className="flex gap-3 bg-gray-200">
+        <CardHeader className="flex gap-3 bg-gray-300">
           <div className="flex flex-col">
             <p className="text-md">
               {mueble.titulo ? mueble.titulo : "Mueble Luxe"}
@@ -135,7 +135,7 @@ export const CardDetalleProducto: React.FC<CardDetalleProductoProps> = ({
           </div>
         </CardBody>
         <Divider />
-        <CardFooter className="flex flex-wrap justify-center gap-4 bg-gray-200">
+        <CardFooter className="flex flex-wrap justify-center gap-4 bg-gray-300">
           {pagina === "FAVORITOS" && (
             <Button
               className="bg-transparent text-black border-1 border-black"

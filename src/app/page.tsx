@@ -3,7 +3,7 @@ import { useMueble } from "@/app/service/muebles/useMueble";
 import { CardMueble } from "@/app/ui/cards/CardMueble";
 import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
-import { Divider, Input } from "@heroui/react";
+import { Divider, Input, Spinner } from "@heroui/react";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -85,7 +85,14 @@ const Home = () => {
     }
   }, [data, filtroCategoria, filtroColores, filtroInput]);
   if (isLoading) {
-    return <div>Cargando..</div>;
+    return (
+      <div className="flex grid place-items-center w-full h-[300px]">
+        <Spinner
+          classNames={{ label: "text-foreground mt-4" }}
+          label="Cargando..."
+        />
+      </div>
+    );
   } else {
     return (
       <div className="w-full h-[auto] ">
