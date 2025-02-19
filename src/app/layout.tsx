@@ -4,6 +4,7 @@ import "./globals.css";
 import { MyHeader } from "./components/header";
 import { MyFooter } from "./components/footer";
 import { Providers } from "./providers";
+import { configApp } from "../../ts/configApp";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mi App con Layout",
+  title: configApp.titleApp,
   description: "Ejemplo de un layout en Next.js",
 };
 

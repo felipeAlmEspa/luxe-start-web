@@ -12,6 +12,10 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroui/react": "^2.6.14",
     "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
@@ -20,6 +24,7 @@
     "next": "^15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-medium-image-zoom": "^5.2.13",
     "zustand": "^5.0.3"
   },
   "devDependencies": {

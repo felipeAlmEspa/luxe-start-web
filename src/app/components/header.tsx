@@ -1,5 +1,13 @@
 "use client";
-import { Heart, Home, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 import {
   Dropdown,
   DropdownTrigger,
@@ -13,6 +21,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useFavoritosStore } from "@/store/useFavoritosStore";
 import { useRouter } from "next/navigation";
 import { useCarritoStore } from "@/store/useCarritoStore";
+import { configApp } from "../../../ts/configApp";
 
 export const MyHeader = () => {
   const [selectedKeys, setSelectedKeys] = useState("Mis muebles");
@@ -48,25 +57,59 @@ export const MyHeader = () => {
       <nav className="bg-white">
         <div className="flex justify-between pl-3 pr-3">
           <div className="text-black grid grid-cols-3 gap-2">
-            <small>Whatsapp: 099999999</small>
-            <small>tuemailaqui@gmail.com</small>
+            <small>Whatsapp: {configApp.telefono}</small>
+            <small>{configApp.email}</small>
           </div>
           <div className="text-black">
-            <small>Cuneca - Ecuador</small>
+            <small>{configApp.ciudad}</small>
           </div>
         </div>
         <Divider />
         <div className="w-full grid">
           <div className="flex pb-2 pt-2 flex-col sm:flex-row">
-            <div className="w-full sm:w-1/3 sm:text-left text-center">
-              <Button
-                className="bg-transparent text-black relative"
-                color="primary"
-                onPress={() => router.push("/")}
-              >
-                <Home className="w-15 h-15" />
-                <strong>Inicio</strong>
-              </Button>
+            <div className="flex flex-row w-full sm:w-1/3 sm:text-left items-center">
+              <div className="">
+                <Button
+                  className="bg-transparent text-black"
+                  color="primary"
+                  onPress={() => router.push("/")}
+                >
+                  <FontAwesomeIcon
+                    icon={faHome}
+                    className="text-gray-500 text-2xl"
+                  />
+                </Button>
+                <Button
+                  className="bg-transparent text-black"
+                  color="primary"
+                  onPress={() => router.push("/")}
+                >
+                  <FontAwesomeIcon
+                    icon={faFacebook}
+                    className="text-blue-800 text-2xl"
+                  />
+                </Button>
+                <Button
+                  className="bg-transparent text-black"
+                  color="primary"
+                  onPress={() => router.push("/")}
+                >
+                  <FontAwesomeIcon
+                    icon={faTwitter}
+                    className="text-blue-400 text-2xl"
+                  />
+                </Button>
+                <Button
+                  className="bg-transparent text-black"
+                  color="primary"
+                  onPress={() => router.push("/")}
+                >
+                  <FontAwesomeIcon
+                    icon={faWhatsapp}
+                    className="text-green-400 text-2xl"
+                  />
+                </Button>
+              </div>
             </div>
             <div className="w-full sm:w-1/3 text-center">
               <h1 className="text-xl sm:text-3xl font-serif">MUEBLERÍA LUXE</h1>

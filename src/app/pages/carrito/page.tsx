@@ -88,7 +88,7 @@ const Carrito = () => {
 
   return (
     <div className="flex flex-wrap justify-center gap-1">
-      <nav className="flex flex-col sm:flex-row gap-4 w-full bg-[#cacaca] p-3 items-center justify-center">
+      <nav className="flex flex-col sm:flex-row gap-2 w-full bg-[#cacaca] p-3 items-center justify-center">
         <Input
           className="w-full sm:w-1/4"
           label="Buscar"
@@ -116,9 +116,9 @@ const Carrito = () => {
           borderColor="border-black"
           title="Filtrar por color"
         />
-        <div className="pt-5 h-full grid place-items-center">
+        <div className="pt-0 sm:pt-5 h-full grid place-items-center">
           <Button color="primary" onPress={onOpen}>
-            Comprar todo
+            Solicitar todo
           </Button>
         </div>
       </nav>
