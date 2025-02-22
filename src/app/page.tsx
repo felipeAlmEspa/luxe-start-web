@@ -1,10 +1,11 @@
 "use client";
 import { useMueble } from "@/app/service/muebles/useMueble";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
-import { Divider, Input, Spinner } from "@heroui/react";
+import { Input, Spinner } from "@heroui/react";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { EmblaCarousel } from "./ui/EmblaCarousel";
+import EmblaCarousel from "./ui/Embla/EmblaCarousel";
+import { EmblaOptionsType } from "embla-carousel";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
@@ -83,6 +84,11 @@ const Home = () => {
       return [];
     }
   }, [data, filtroCategoria, filtroColores, filtroInput]);
+
+  const OPTIONS: EmblaOptionsType = { loop: true };
+  const SLIDE_COUNT = 5;
+  const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+
   if (isLoading) {
     return (
       <div className="flex grid place-items-center w-full h-[300px]">
@@ -95,12 +101,14 @@ const Home = () => {
   } else {
     return (
       <div className="fixed top-[178px] sm:top-[86px] left-0 w-full min-h-scrren bg-white items-center justify-center">
-        <div className="flex h-[48vh] sm:h-[51vh] justify-center rounded-2xl">
+        <div className="flex h-[50vh] sm:h-[51vh] justify-center rounded-2xl">
           {data && (
             <EmblaCarousel
-              data={data
-                .filter((item) => item.img !== null)
-                .map((item) => ({ img: item.img as string }))}
+              slides={SLIDES}
+              options={OPTIONS}
+              data={data.map((item) => {
+                return item.img ? item.img : "";
+              })}
             />
           )}
         </div>
@@ -134,17 +142,7 @@ const Home = () => {
             />
           </nav>
         </div>
-        <div className="w-full min-h-[70vh] border border-2 border-white">
-          {/* {filtrarData &&
-            filtrarData.map((item, index) => (
-              <div
-                key={index}
-                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2 min-w-[340px]"
-              >
-                <CardMueble key={index} mueble={item} />
-              </div>
-            ))} */}
-        </div>
+        <div className="w-full min-h-[70vh] border border-2 border-white"></div>
       </div>
     );
   }
