@@ -16,10 +16,10 @@ export const ModalImagen: React.FC<ModalImagenProps> = ({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size="md"
+      size="full"
       placement="center"
     >
-      <ModalContent className="relative">
+      <ModalContent className="relative max-w-[500px] mx-h-[80vh] bg-transparent border border-none h-[60vh]">
         <Image
           className="w-full flex-shrink-0"
           src={imageUrl}

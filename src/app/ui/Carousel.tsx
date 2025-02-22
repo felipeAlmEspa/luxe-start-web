@@ -55,9 +55,9 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
   };
 
   return (
-    <div className="relative  w-[400px] justify-center pb-2">
+    <div className="flex flex-col  w-screen justify-center items-center pb-2">
       {/* Slide container */}
-      <div className="overflow-hidden rounded-2xl w-full">
+      <div className="overflow-hidden rounded-2xl w-[500px] justify-center items-center">
         <div
           className="flex transition-transform duration-500 h-[400px]"
           style={{
@@ -82,13 +82,13 @@ export const Carousel: React.FC<CarouselProps> = ({ data }) => {
       {/* Buttons */}
       <button
         onClick={handlePrev}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
+        className="absolute  left-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
       >
         ◀
       </button>
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
+        className="absolute  right-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
       >
         ▶
       </button>

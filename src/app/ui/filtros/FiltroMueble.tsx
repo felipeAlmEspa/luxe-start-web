@@ -44,14 +44,14 @@ export const FiltroMueble: React.FC<FiltroMuebleProps> = ({
   const limpiarSelect = useCallback(() => onSelect(null), [onSelect]);
   return (
     <div className="flex flex-col min-w-[150px]">
-      <span>{title}</span>
+      <small>{title}</small>
       <div className="flex flex-row items-center justify-between gap-1">
         <Dropdown>
           <DropdownTrigger>
             <Button
               variant="bordered"
               color="default"
-              className={`border ${borderColor} uppercase text-[11px] text-gray-800`}
+              className={`border border-1 border-gray-400 uppercase text-[11px] text-gray-800 h-[30px]`}
             >
               {valor ?? placeholder}
             </Button>

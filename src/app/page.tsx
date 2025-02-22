@@ -1,11 +1,10 @@
 "use client";
 import { useMueble } from "@/app/service/muebles/useMueble";
-import { CardMueble } from "@/app/ui/cards/CardMueble";
-import { Carousel } from "@/app/ui/Carousel";
 import { FiltroMueble } from "@/app/ui/filtros/FiltroMueble";
 import { Divider, Input, Spinner } from "@heroui/react";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import { EmblaCarousel } from "./ui/EmblaCarousel";
 
 const Home = () => {
   const [filtroColores, setFiltroColores] = useState<string | null>(null);
@@ -95,51 +94,48 @@ const Home = () => {
     );
   } else {
     return (
-      <div className="w-full h-[auto] ">
-        <div className="flex justify-center  bg-[#f2f1f1] rounded-2xl">
+      <div className="fixed top-[178px] sm:top-[86px] left-0 w-full min-h-scrren bg-white items-center justify-center">
+        <div className="flex h-[48vh] sm:h-[51vh] justify-center rounded-2xl">
           {data && (
-            <Carousel
+            <EmblaCarousel
               data={data
-                .filter((item) => typeof item.img === "string") // Filtra solo los que tienen `img` válida
-                .map((item) => ({ img: item.img ?? "" }))}
+                .filter((item) => item.img !== null)
+                .map((item) => ({ img: item.img as string }))}
             />
           )}
         </div>
-        <div className="pt-3">
-          <Divider />
+        <div className="w-full h-50px grid place-items-center border-none">
+          <nav className="flex bg-white w-[90%] border-t-1 border-b-1 border-gray-300 flex-col sm:flex-row gap-4 p-1 items-center justify-center">
+            <Input
+              className="w-full sm:w-1/4 h-[30px]"
+              labelPlacement="outside"
+              placeholder="Ingresar término de búsqueda"
+              startContent={
+                <Search className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              onChange={(v) => setFiltroInput(v.target.value)}
+              type="email"
+            />
+            <FiltroMueble
+              data={obtenerCategorias}
+              onSelect={setFiltroCategoria}
+              valor={filtroCategoria}
+              placeholder="Seleccionar una opción"
+              borderColor="border-black"
+              title="Filtrar por categoría"
+            />
+            <FiltroMueble
+              data={obtenerColores}
+              onSelect={setFiltroColores}
+              valor={filtroColores}
+              placeholder="Seleccionar una opción"
+              borderColor="border-black"
+              title="Filtrar por color"
+            />
+          </nav>
         </div>
-        <nav className="flex flex-col sm:flex-row gap-4 bg-[#cacaca] p-3 items-center justify-center">
-          <Input
-            className="w-full sm:w-1/4"
-            label="Buscar"
-            labelPlacement="outside"
-            placeholder="Ingresar término de búsqueda"
-            startContent={
-              <Search className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-            }
-            onChange={(v) => setFiltroInput(v.target.value)}
-            type="email"
-          />
-          <FiltroMueble
-            data={obtenerCategorias}
-            onSelect={setFiltroCategoria}
-            valor={filtroCategoria}
-            placeholder="Seleccionar una opción"
-            borderColor="border-black"
-            title="Filtrar por categoría"
-          />
-          <FiltroMueble
-            data={obtenerColores}
-            onSelect={setFiltroColores}
-            valor={filtroColores}
-            placeholder="Seleccionar una opción"
-            borderColor="border-black"
-            title="Filtrar por color"
-          />
-        </nav>
-
-        <div className="flex flex-wrap justify-center gap-2">
-          {filtrarData &&
+        <div className="w-full min-h-[70vh] border border-2 border-white">
+          {/* {filtrarData &&
             filtrarData.map((item, index) => (
               <div
                 key={index}
@@ -147,7 +143,7 @@ const Home = () => {
               >
                 <CardMueble key={index} mueble={item} />
               </div>
-            ))}
+            ))} */}
         </div>
       </div>
     );
