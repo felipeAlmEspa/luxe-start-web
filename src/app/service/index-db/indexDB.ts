@@ -1,3 +1,4 @@
+import { isNil } from "lodash";
 import { IProducto } from "../../../../ts/models/IProducto";
 import { productosApi } from "@/app/api/productosApi";
 
@@ -47,6 +48,7 @@ export const agregarProducto = async (producto: IProducto) => {
 };
 
 export const obtenerProductos = async (): Promise<IProducto[]> => {
+  console.log("Test invalidando passed");
   const database = await openDB();
   return new Promise((resolve, reject) => {
     const tx = database.transaction(STORE_NAME, "readonly");
@@ -55,6 +57,23 @@ export const obtenerProductos = async (): Promise<IProducto[]> => {
 
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject("Error al obtener productos");
+  });
+};
+
+export const obtenerProductoByIdDB = async (
+  id: number | null
+): Promise<IProducto | null> => {
+  if (isNil(id)) {
+    return null;
+  }
+  const database = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(STORE_NAME, "readonly");
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.get(id);
+
+    request.onsuccess = () => resolve(request.result || null); // Si no encuentra el producto, retorna null
+    request.onerror = () => reject("Error al obtener el producto");
   });
 };
 

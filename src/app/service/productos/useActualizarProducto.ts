@@ -4,10 +4,11 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { IProducto } from "../../../../ts/models/IProducto";
-import { actualizarProducto, obtenerProductos } from "../index-db/indexDB";
+import { actualizarProducto } from "../index-db/indexDB";
+import { productosKey } from "./productosKey";
 
 export const useActualizarProducto = (
-  mutationOptions: UseMutationOptions<IProducto, Error, IProducto, unknown>
+  mutationOptions?: UseMutationOptions<IProducto, Error, IProducto, unknown>
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -17,7 +18,7 @@ export const useActualizarProducto = (
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: obtenerProductos,
+        queryKey: productosKey.listado,
       });
     },
     ...mutationOptions,
