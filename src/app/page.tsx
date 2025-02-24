@@ -65,12 +65,12 @@ const Home = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid w-full  p-1 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid w-full p-1 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-2">
         {data?.slice(0, itemsToShow).map((item) => (
           <CardProductoImagen key={item.id} mueble={item} />
         ))}
       </div>
-      <div className="flex w-full grid place-items-center">
+      <div className="flex w-full grid place-items-center pt-2 pb-2">
         <div className="flex w-full md:w-[400px] max-h-[60vh] justify-center items-center">
           {data && data[17] && <CardProductoImagen mueble={data[17]} />}
         </div>
