@@ -18,7 +18,7 @@ export const useActualizarProducto = (
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: productosKey.listado,
+        queryKey: productosKey.listado(),
       });
     },
     ...mutationOptions,

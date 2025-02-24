@@ -4,22 +4,15 @@ import { EyeIcon, Heart, ShoppingCart } from "lucide-react";
 import { useActualizarProducto } from "@/app/service/productos/useActualizarProducto";
 import { isNil } from "lodash";
 import { toast } from "sonner";
-import { useObtenerProductoById } from "@/app/service/productos/useObtenerProductoById";
-
 interface PropsCardProductoImagen {
   producto: IProducto;
 }
 export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
   producto,
 }) => {
-  const { data: productoDB } = useObtenerProductoById(producto.id!);
   const { mutate: actualizarPro } = useActualizarProducto();
   const addFavorito = async () => {
-    if (isNil(productoDB)) {
-      return;
-    }
-
-    if (productoDB.favorito === true) {
+    if (producto.favorito === true) {
       producto = { ...producto, favorito: false };
     } else {
       producto = { ...producto, favorito: true };
