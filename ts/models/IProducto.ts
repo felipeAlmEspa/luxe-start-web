@@ -12,5 +12,7 @@ export interface IProducto {
   ancho: number | null;
   largo: number | null;
   categoria: string | null;
+  favorito: boolean;
+  carrito: boolean;
   color: string | null;
 }

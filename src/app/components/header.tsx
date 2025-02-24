@@ -6,10 +6,14 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { configApp } from "../../../ts/configApp";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { sincronizarConAPI } from "../service/index-db/indexDB";
 export const MyHeader = () => {
   const pathname = usePathname(); // Obtiene la ruta actual
   const router = useRouter(); // Permite cambiar de ruta
-
+  useEffect(() => {
+    sincronizarConAPI();
+  }, []);
   const navegar = (ruta: string) => {
     router.push(ruta);
   };

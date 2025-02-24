@@ -1,8 +1,9 @@
-import { IProducto } from "../models/IProducto";
+import { mueblesApi } from "@/app/api/mueblesApi";
+import { IProducto } from "../../../../ts/models/IProducto";
 
-const DB_NAME = "MueblesDB";
+const DB_NAME = "ProductosDB";
 const DB_VERSION = 1;
-const STORE_NAME = "muebles";
+const STORE_NAME = "productos";
 
 let db: IDBDatabase | null = null;
 
@@ -38,14 +39,14 @@ export const openDB = (): Promise<IDBDatabase> => {
   });
 };
 
-export const agregarMueble = async (mueble: IProducto) => {
+export const agregarProducto = async (producto: IProducto) => {
   const database = await openDB();
   const tx = database.transaction(STORE_NAME, "readwrite");
   const store = tx.objectStore(STORE_NAME);
-  store.add(mueble);
+  store.add(producto);
 };
 
-export const obtenerMuebles = async (): Promise<IProducto[]> => {
+export const obtenerProductos = async (): Promise<IProducto[]> => {
   const database = await openDB();
   return new Promise((resolve, reject) => {
     const tx = database.transaction(STORE_NAME, "readonly");
@@ -53,20 +54,46 @@ export const obtenerMuebles = async (): Promise<IProducto[]> => {
     const request = store.getAll();
 
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject("Error al obtener muebles");
+    request.onerror = () => reject("Error al obtener productos");
   });
 };
 
-export const eliminarMueble = async (id: number) => {
+export const eliminarProducto = async (id: number) => {
   const database = await openDB();
   const tx = database.transaction(STORE_NAME, "readwrite");
   const store = tx.objectStore(STORE_NAME);
   store.delete(id);
 };
 
-export const actualizarMueble = async (mueble: IProducto) => {
+export const actualizarProducto = async (producto: IProducto) => {
   const database = await openDB();
   const tx = database.transaction(STORE_NAME, "readwrite");
   const store = tx.objectStore(STORE_NAME);
-  store.put(mueble);
+  store.put(producto);
+};
+
+// Función para cargar muebles desde la API y sincronizarlos con IndexedDB
+export const sincronizarConAPI = async () => {
+  try {
+    // Hacer una petición a la API para obtener los muebles
+    const mueblesAPI = await mueblesApi.getMuebles();
+
+    // Obtener los muebles en IndexedDB
+    const mueblesIndexedDB = await obtenerProductos();
+
+    // Sincronizar: Si hay muebles nuevos en la API que no están en IndexedDB, agregarlos
+    for (const muebleAPI of mueblesAPI) {
+      const muebleExistente = mueblesIndexedDB.find(
+        (m) => m.id === muebleAPI.id
+      );
+      if (!muebleExistente) {
+        await agregarProducto(muebleAPI);
+      } else {
+        // Si el mueble ya existe en IndexedDB, actualízalo con los datos de la API
+        await actualizarProducto(muebleAPI);
+      }
+    }
+  } catch (error) {
+    console.error("Error al sincronizar con la API", error);
+  }
 };
