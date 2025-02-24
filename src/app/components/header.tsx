@@ -5,7 +5,14 @@ import { ChevronRight, Heart, ImageIcon, ShoppingCart } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { configApp } from "../../../ts/configApp";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 export const MyHeader = () => {
+  const pathname = usePathname(); // Obtiene la ruta actual
+  const router = useRouter(); // Permite cambiar de ruta
+
+  const navegar = (ruta: string) => {
+    router.push(ruta);
+  };
   return (
     <div className="bg-principal fixed top-0 left-0 w-full h-[19vh] p-1 z-50 shadow-md">
       <div className="flex pb-1 pr-2 pl-2 flex-row w-full h-[50px] justify-between gap-1">
@@ -15,14 +22,34 @@ export const MyHeader = () => {
           </Button>
         </div>
         <div className="flex h-full pl-1 pr-1 bg-[#535355] rounded-2xl justify-center">
-          <ToggleGroup type="single">
-            <ToggleGroupItem value="bold" aria-label="Toggle bold">
+          <ToggleGroup
+            type="single"
+            value={pathname}
+            onValueChange={(value) => value && navegar(value)}
+          >
+            <ToggleGroupItem
+              value="/"
+              aria-label="Ir a Inicio"
+              className={pathname === "/" ? "bg-blue-500 text-white" : ""}
+            >
               <small>Inicio</small>
             </ToggleGroupItem>
-            <ToggleGroupItem value="italic" aria-label="Toggle italic">
+            <ToggleGroupItem
+              value="/nosotros"
+              aria-label="Ir a Nosotros"
+              className={
+                pathname === "/nosotros" ? "bg-blue-500 text-white" : ""
+              }
+            >
               <small>Nosotros</small>
             </ToggleGroupItem>
-            <ToggleGroupItem value="underline" aria-label="Toggle underline">
+            <ToggleGroupItem
+              value="/historia"
+              aria-label="Ir a Historia"
+              className={
+                pathname === "/historia" ? "bg-blue-500 text-white" : ""
+              }
+            >
               <small>Historia</small>
             </ToggleGroupItem>
           </ToggleGroup>
