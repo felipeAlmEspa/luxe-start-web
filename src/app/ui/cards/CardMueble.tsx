@@ -1,4 +1,4 @@
-import { IMueble } from "../../../../ts/models/IMueble";
+import { IProducto } from "../../../../ts/models/IProducto";
 import {
   Card,
   CardHeader,
@@ -17,7 +17,7 @@ import { useCallback, useMemo } from "react";
 import { useCarritoStore } from "@/store/useCarritoStore";
 
 interface CardMuebleProps {
-  mueble: IMueble;
+  mueble: IProducto;
 }
 export const CardMueble: React.FC<CardMuebleProps> = ({ mueble }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

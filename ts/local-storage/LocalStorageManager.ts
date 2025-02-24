@@ -1,4 +1,4 @@
-import { IMueble } from "../models/IMueble";
+import { IProducto } from "../models/IProducto";
 
 type StorageKey =
   | "mueble"
@@ -22,14 +22,14 @@ export class LocalStorageManager {
     localStorage.removeItem(key);
   }
 
-  static addMueble(mueble: IMueble): void {
-    const muebles = this.getItem<IMueble[]>("muebles") || [];
+  static addMueble(mueble: IProducto): void {
+    const muebles = this.getItem<IProducto[]>("muebles") || [];
     muebles.push(mueble);
     this.setItem("muebles", muebles);
   }
 
   static removeMueble(id: number): void {
-    let muebles = this.getItem<IMueble[]>("muebles") || [];
+    let muebles = this.getItem<IProducto[]>("muebles") || [];
     muebles = muebles.filter((mueble) => mueble.id !== id);
     this.setItem("muebles", muebles);
   }

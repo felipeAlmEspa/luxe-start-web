@@ -1,15 +1,15 @@
 import { create } from "zustand";
-import { IMueble } from "../../ts/models/IMueble";
+import { IProducto } from "../../ts/models/IProducto";
 import { LocalStorageManager } from "../../ts/local-storage/LocalStorageManager";
 
 export type TypeFavoritosStore = {
   state: {
-    listaFavoritos: IMueble[];
+    listaFavoritos: IProducto[];
   };
   setState: (newState: Partial<TypeFavoritosStore["state"]>) => void;
-  addFavorito: (mueble: IMueble) => void;
+  addFavorito: (mueble: IProducto) => void;
   removeFavorito: (id: number | null) => void;
-  updateFavorito: (updatedMueble: IMueble) => void;
+  updateFavorito: (updatedMueble: IProducto) => void;
   cargaInicial: () => void;
 };
 
@@ -26,7 +26,7 @@ export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
     }),
 
   // Agregar un mueble a favoritos y actualizar localStorage
-  addFavorito: (mueble: IMueble) =>
+  addFavorito: (mueble: IProducto) =>
     set((state) => {
       const newLista = [...state.state.listaFavoritos, mueble];
       LocalStorageManager.setItem("muebles", newLista);
@@ -48,7 +48,7 @@ export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
     }),
 
   // Actualizar un mueble en favoritos y sincronizar con localStorage
-  updateFavorito: (updatedMueble: IMueble) =>
+  updateFavorito: (updatedMueble: IProducto) =>
     set((state) => {
       const newLista = state.state.listaFavoritos.map((mueble) =>
         mueble.id === updatedMueble.id ? updatedMueble : mueble
@@ -62,7 +62,7 @@ export const useFavoritosStore = create<TypeFavoritosStore>((set) => ({
   // Cargar datos desde localStorage
   cargaInicial: () =>
     set(() => {
-      const lista = LocalStorageManager.getItem<IMueble[]>("muebles") ?? [];
+      const lista = LocalStorageManager.getItem<IProducto[]>("muebles") ?? [];
       return {
         state: { listaFavoritos: lista },
       };

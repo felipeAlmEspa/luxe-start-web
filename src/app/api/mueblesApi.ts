@@ -1,10 +1,10 @@
-import { IMueble } from "../../../ts/models/IMueble";
+import { IProducto } from "../../../ts/models/IProducto";
 
 export const mueblesApi = {
   getMuebles: async () => {
     try {
       const response = await fetch("https://felipealmespa.github.io/luxeApi/");
-      let res: IMueble[] = [];
+      let res: IProducto[] = [];
       const text = await response.text(); // Obtener el contenido como texto
       // Extraer contenido del <pre>
       const jsonMatch = text.match(/<pre>([\s\S]*?)<\/pre>/);

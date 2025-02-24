@@ -1,4 +1,4 @@
-export interface IMueble {
+export interface IProducto {
   id: number | null;
   titulo: string | null;
   activo: boolean | null;

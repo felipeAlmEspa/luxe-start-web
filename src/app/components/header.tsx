@@ -78,7 +78,8 @@ export const MyHeader = () => {
           <p>{configApp.name}</p>
         </div>
         <div className="w-[25%] sm:w-[12%] p-1 pr-2 flex justify-end">
-          <Button className="bg-white" size="icon">
+          <Button className="bg-white w-auto p-1" size="icon">
+            <small>Contactos</small>
             <ChevronRight />
           </Button>
         </div>

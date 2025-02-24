@@ -1,15 +1,15 @@
 import { create } from "zustand";
-import { IMueble } from "../../ts/models/IMueble";
+import { IProducto } from "../../ts/models/IProducto";
 import { LocalStorageManager } from "../../ts/local-storage/LocalStorageManager";
 
 export type TypeCarritoStore = {
   state: {
-    listaCarrito: IMueble[];
+    listaCarrito: IProducto[];
   };
   setState: (newState: Partial<TypeCarritoStore["state"]>) => void;
-  addCarrito: (mueble: IMueble) => void;
+  addCarrito: (mueble: IProducto) => void;
   removeCarrito: (id: number | null) => void;
-  updateCarrito: (updatedMueble: IMueble) => void;
+  updateCarrito: (updatedMueble: IProducto) => void;
   cargaInicialCarrito: () => void;
 };
 
@@ -26,7 +26,7 @@ export const useCarritoStore = create<TypeCarritoStore>((set) => ({
     }),
 
   // Agregar un mueble a Carrito y actualizar localStorage
-  addCarrito: (mueble: IMueble) =>
+  addCarrito: (mueble: IProducto) =>
     set((state) => {
       const newLista = [...state.state.listaCarrito, mueble];
       LocalStorageManager.setItem("muebles.carrito", newLista);
@@ -48,7 +48,7 @@ export const useCarritoStore = create<TypeCarritoStore>((set) => ({
     }),
 
   // Actualizar un mueble en Carrito y sincronizar con localStorage
-  updateCarrito: (updatedMueble: IMueble) =>
+  updateCarrito: (updatedMueble: IProducto) =>
     set((state) => {
       const newLista = state.state.listaCarrito.map((mueble) =>
         mueble.id === updatedMueble.id ? updatedMueble : mueble
@@ -63,7 +63,7 @@ export const useCarritoStore = create<TypeCarritoStore>((set) => ({
   cargaInicialCarrito: () =>
     set(() => {
       const lista =
-        LocalStorageManager.getItem<IMueble[]>("muebles.carrito") ?? [];
+        LocalStorageManager.getItem<IProducto[]>("muebles.carrito") ?? [];
       return {
         state: { listaCarrito: lista },
       };
