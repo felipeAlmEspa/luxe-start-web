@@ -1,5 +1,5 @@
-import { mueblesApi } from "@/app/api/mueblesApi";
 import { IProducto } from "../../../../ts/models/IProducto";
+import { productosApi } from "@/app/api/productosApi";
 
 const DB_NAME = "ProductosDB";
 const DB_VERSION = 1;
@@ -70,27 +70,29 @@ export const actualizarProducto = async (producto: IProducto) => {
   const tx = database.transaction(STORE_NAME, "readwrite");
   const store = tx.objectStore(STORE_NAME);
   store.put(producto);
+  return producto;
 };
 
-// Función para cargar muebles desde la API y sincronizarlos con IndexedDB
+// Función para cargar productos desde la API y sincronizarlos con IndexedDB
 export const sincronizarConAPI = async () => {
   try {
-    // Hacer una petición a la API para obtener los muebles
-    const mueblesAPI = await mueblesApi.getMuebles();
+    // Hacer una petición a la API para obtener los productos
+    const productosAPI = await productosApi.getProductos();
 
-    // Obtener los muebles en IndexedDB
-    const mueblesIndexedDB = await obtenerProductos();
-
-    // Sincronizar: Si hay muebles nuevos en la API que no están en IndexedDB, agregarlos
-    for (const muebleAPI of mueblesAPI) {
-      const muebleExistente = mueblesIndexedDB.find(
-        (m) => m.id === muebleAPI.id
-      );
-      if (!muebleExistente) {
-        await agregarProducto(muebleAPI);
-      } else {
-        // Si el mueble ya existe en IndexedDB, actualízalo con los datos de la API
-        await actualizarProducto(muebleAPI);
+    // Obtener los productos en IndexedDB
+    const productosIndexedDB = await obtenerProductos();
+    if (productosIndexedDB.length === 0) {
+      // Sincronizar: Si hay productos nuevos en la API que no están en IndexedDB, agregarlos
+      for (const muebleAPI of productosAPI) {
+        const muebleExistente = productosIndexedDB.find(
+          (m) => m.id === muebleAPI.id
+        );
+        if (!muebleExistente) {
+          await agregarProducto(muebleAPI);
+        } else {
+          // Si el mueble ya existe en IndexedDB, actualízalo con los datos de la API
+          await actualizarProducto(muebleAPI);
+        }
       }
     }
   } catch (error) {

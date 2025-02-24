@@ -8,11 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMueble } from "./service/muebles/useMueble";
 import { CardProductoImagen } from "./components/producto/CardProductoImagen";
 import { useEffect, useState } from "react";
+import { useProductos } from "./service/productos/useProductos";
 const Home = () => {
-  const { data } = useMueble();
+  const { data } = useProductos();
+
   const [itemsToShow, setItemsToShow] = useState(2); // Inicia con 2 columnas
 
   useEffect(() => {
@@ -67,18 +68,18 @@ const Home = () => {
       </div>
       <div className="grid w-full p-1 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-2">
         {data?.slice(0, itemsToShow).map((item) => (
-          <CardProductoImagen key={item.id} mueble={item} />
+          <CardProductoImagen key={item.id} producto={item} />
         ))}
       </div>
       <div className="flex w-full grid place-items-center pt-2 pb-2">
         <div className="flex w-full md:w-[400px] max-h-[60vh] justify-center items-center">
-          {data && data[17] && <CardProductoImagen mueble={data[17]} />}
+          {data && data[17] && <CardProductoImagen producto={data[17]} />}
         </div>
       </div>
       <div className="grid w-full h-[60vh] p-1 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data &&
           data.map((item) => (
-            <CardProductoImagen key={item.id} mueble={item} />
+            <CardProductoImagen key={item.id} producto={item} />
           ))}
       </div>
     </div>
