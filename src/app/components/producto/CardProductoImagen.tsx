@@ -4,12 +4,15 @@ import { EyeIcon, Heart, ShoppingCart } from "lucide-react";
 import { useActualizarProducto } from "@/app/service/productos/useActualizarProducto";
 import { isNil } from "lodash";
 import { toast } from "sonner";
+import { useState } from "react";
+import { ModalImagen } from "../modals/ModalImagen";
 interface PropsCardProductoImagen {
   producto: IProducto;
 }
 export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
   producto,
 }) => {
+  const [openModalImg, setOpenModalImg] = useState<boolean>(false);
   const { mutate: actualizarPro } = useActualizarProducto();
   const addFavorito = async () => {
     if (producto.favorito === true) {
@@ -54,6 +57,7 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
         width={200}
         height={200} // Controla la altura
         priority
+        onClick={() => setOpenModalImg(!openModalImg)}
       />
 
       {/* Contenedor de botones */}
@@ -82,6 +86,13 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
           <EyeIcon size={18} />
         </button>
       </div>
+      {openModalImg && (
+        <ModalImagen
+          img={producto.img ?? ""}
+          isOpen={openModalImg}
+          setIsOpen={() => setOpenModalImg(!openModalImg)}
+        />
+      )}
     </div>
   );
 };
