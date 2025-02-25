@@ -4,16 +4,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { CardProductoImagen } from "./components/producto/CardProductoImagen";
 import { useEffect, useState } from "react";
 import { useProductos } from "./service/productos/useProductos";
+import { listaColores } from "../../ts/Colores";
+import { listaCategoriasMuebles } from "../../ts/CategoriaMuebles";
 const Home = () => {
   const { data } = useProductos();
-
   const [itemsToShow, setItemsToShow] = useState(2); // Inicia con 2 columnas
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const Home = () => {
 
     return () => window.removeEventListener("resize", updateItemsToShow);
   }, []);
+
   return (
     <div className="flex flex-col w-screen">
       <div className="flex pl-1 w-full justify-center items-center gap-2">
@@ -41,12 +42,11 @@ const Home = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Filtrar Categoría</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              {listaCategoriasMuebles.map((item, index) => (
+                <SelectItem key={item + index} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -56,12 +56,11 @@ const Home = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Filtrar Color</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              {listaColores.map((item, index) => (
+                <SelectItem key={item + index} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>

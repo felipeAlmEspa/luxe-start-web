@@ -5,6 +5,7 @@ import { MyHeader } from "./components/header";
 import { MyFooter } from "./components/footer";
 import { Providers } from "./providers";
 import { configApp } from "../../ts/configApp";
+import { Toaster } from "sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
             <MyHeader />
             <main className="flex-1 h-full pt-[20vh]">{children}</main>
             <MyFooter />
+            <Toaster />
           </div>
         </Providers>
       </body>

@@ -1,4 +1,3 @@
-import { useCarritoStore } from "@/store/useCarritoStore";
 import {
   Modal,
   ModalContent,
@@ -17,7 +16,6 @@ export const ModalCorreo: React.FC<ModalImagenProps> = ({
   isOpen,
   onOpenChange,
 }) => {
-  const listaCarrito = useCarritoStore((state) => state.state);
   return (
     <>
       <Modal
