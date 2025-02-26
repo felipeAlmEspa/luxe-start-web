@@ -41,8 +41,8 @@ export const MyHeader = () => {
     <div className="bg-principal fixed top-0 left-0 w-full h-[19vh] p-1 z-50 shadow-md">
       <div className="flex pb-1 pr-2 pl-2 flex-row w-full h-[50px] justify-between gap-1">
         <div>
-          <Button className="w-10 h-10 rounded-full bg-white">
-            <ImageIcon size={24} />
+          <Button className="w-10 h-10 -p-1 rounded-full bg-white">
+            <ImageIcon size={16} />
           </Button>
         </div>
         <div className="flex h-full pl-1 pr-1 bg-[#535355] rounded-2xl justify-center">
@@ -81,11 +81,11 @@ export const MyHeader = () => {
         <div className="flex gap-2">
           <div className="relative">
             <Button
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 -p-1 rounded-full"
               variant="secondary"
               onClick={() => navegar("/favoritos")}
             >
-              <Heart size={24} />
+              <Heart size={16} />
             </Button>
             {filtrarFavoritos.length > 0 && (
               <span className="absolute top-0 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -95,10 +95,10 @@ export const MyHeader = () => {
           </div>
           <div className="relative">
             <Button
-              className="w-10 h-10 rounded-full bg-[#125ece]"
+              className="w-10 h-10 -p-1 rounded-full bg-[#125ece]"
               onClick={() => navegar("/carrito")}
             >
-              <ShoppingCart size={24} color="white" />
+              <ShoppingCart size={16} color="white" />
             </Button>
             {filtrarCarrito.length > 0 && (
               <span className="absolute top-0 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
