@@ -80,7 +80,11 @@ export const MyHeader = () => {
         </div>
         <div className="flex gap-2">
           <div className="relative">
-            <Button className="w-10 h-10 rounded-full" variant="secondary">
+            <Button
+              className="w-10 h-10 rounded-full"
+              variant="secondary"
+              onClick={() => navegar("/favoritos")}
+            >
               <Heart size={24} />
             </Button>
             {filtrarFavoritos.length > 0 && (
@@ -90,7 +94,10 @@ export const MyHeader = () => {
             )}
           </div>
           <div className="relative">
-            <Button className="w-10 h-10 rounded-full bg-[#125ece]">
+            <Button
+              className="w-10 h-10 rounded-full bg-[#125ece]"
+              onClick={() => navegar("/carrito")}
+            >
               <ShoppingCart size={24} color="white" />
             </Button>
             {filtrarCarrito.length > 0 && (
