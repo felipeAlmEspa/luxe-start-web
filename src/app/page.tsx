@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/ui/components/select";
 import { CardProductoImagen } from "./components/producto/CardProductoImagen";
 import { useEffect, useState } from "react";
 import { useProductos } from "./service/productos/useProductos";

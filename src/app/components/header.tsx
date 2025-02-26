@@ -1,8 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/components/button";
 import { ChevronRight, Heart, ImageIcon, ShoppingCart } from "lucide-react";
 
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@/ui/components/toggle-group";
 import { configApp } from "../../../ts/configApp";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";

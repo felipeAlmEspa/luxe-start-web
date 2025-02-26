@@ -8,7 +8,7 @@ import {
   ModalFooter,
 } from "@heroui/modal";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/components/button";
 
 interface PropsModalImagen {
   img: string;
