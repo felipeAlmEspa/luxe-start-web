@@ -11,11 +11,12 @@ const Favoritos = () => {
     if (isNil(listaProductos)) return [];
     return listaProductos.filter((item) => item.favorito === true);
   }, [listaProductos]);
+
   return (
     <div>
       <div className="grid w-full p-1 gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-2">
         {proFavoritos.map((item) => (
-          <ProductoInfo key={item.id} producto={item} checked />
+          <ProductoInfo key={item.id} producto={item} />
         ))}
       </div>
     </div>

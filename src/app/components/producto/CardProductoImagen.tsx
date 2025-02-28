@@ -6,12 +6,15 @@ import { isNil } from "lodash";
 import { toast } from "sonner";
 import { useState } from "react";
 import { ModalImagen } from "../modals/ModalImagen";
+import { useDisclosure } from "@heroui/react";
+import { ModalDetalleProducuto } from "../modals/ModalDetalleProducuto";
 interface PropsCardProductoImagen {
   producto: IProducto;
 }
 export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
   producto,
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [openModalImg, setOpenModalImg] = useState<boolean>(false);
   const { mutate: actualizarPro } = useActualizarProducto();
   const addFavorito = async () => {
@@ -46,6 +49,7 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
       },
     });
   };
+
   return (
     <div className="w-full relative">
       {/* Imagen */}
@@ -82,7 +86,10 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
             <ShoppingCart size={18} />
           )}
         </button>
-        <button className="px-4 py-2 bg-black bg-opacity-20 text-white rounded-lg">
+        <button
+          onClick={onOpen}
+          className="px-4 py-2 bg-black bg-opacity-20 text-white rounded-lg"
+        >
           <EyeIcon size={18} />
         </button>
       </div>
@@ -91,6 +98,15 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
           img={producto.img ?? ""}
           isOpen={openModalImg}
           setIsOpen={() => setOpenModalImg(!openModalImg)}
+        />
+      )}
+
+      {isOpen && (
+        <ModalDetalleProducuto
+          isOpen={isOpen}
+          producto={producto}
+          onOpen={onOpen}
+          onClose={onClose}
         />
       )}
     </div>
