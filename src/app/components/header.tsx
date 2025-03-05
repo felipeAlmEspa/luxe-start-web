@@ -109,7 +109,7 @@ export const MyHeader = () => {
         </div>
       </div>
 
-      <div className="flex mt-1 w-full h-[10vh] bg-gradient-to-r from-[#125ece] to-[#97b1d8] rounded-3xl gap-2 items-center">
+      <div className="flex mt-1 w-full min-h-[52px] h-[10vh] bg-gradient-to-r from-[#125ece] to-[#97b1d8] rounded-3xl gap-2 items-center">
         <div className="w-[22%] sm:w-[25%] h-full flex items-center justify-center">
           <Image
             aria-hidden

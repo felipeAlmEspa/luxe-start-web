@@ -39,13 +39,13 @@ export const ModalDetalleProducuto: React.FC<PropsModalDetalleProducuto> = ({
   const modificarProducto = (pro: IProducto, estado: boolean) => {
     actualizarPro(pro, {
       onSuccess: () => {
-        ShowCustomToast(
-          "success",
-          `Producto ${
+        ShowCustomToast({
+          type: "success",
+          title: `Producto ${
             estado === true ? "agregado a la" : "eliminado de la"
           } lista correctamente`,
-          3000
-        );
+          duration: 3000,
+        });
       },
     });
   };

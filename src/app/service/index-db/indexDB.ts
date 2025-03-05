@@ -48,13 +48,11 @@ export const agregarProducto = async (producto: IProducto) => {
 };
 
 export const obtenerProductos = async (): Promise<IProducto[]> => {
-  console.log("Test invalidando passed");
   const database = await openDB();
   return new Promise((resolve, reject) => {
     const tx = database.transaction(STORE_NAME, "readonly");
     const store = tx.objectStore(STORE_NAME);
     const request = store.getAll();
-
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject("Error al obtener productos");
   });
@@ -97,7 +95,6 @@ export const sincronizarConAPI = async () => {
   try {
     // Hacer una petición a la API para obtener los productos
     const productosAPI = await productosApi.getProductos();
-
     // Obtener los productos en IndexedDB
     const productosIndexedDB = await obtenerProductos();
     if (productosIndexedDB.length === 0) {

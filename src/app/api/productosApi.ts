@@ -3,7 +3,9 @@ import { IProducto } from "../../../ts/models/IProducto";
 export const productosApi = {
   getProductos: async () => {
     try {
-      const response = await fetch("https://felipealmespa.github.io/luxeApi/");
+      const response = await fetch(
+        "https://felipealmespa.github.io/luxeApi/productos.html"
+      );
       let res: IProducto[] = [];
       const text = await response.text(); // Obtener el contenido como texto
       // Extraer contenido del <pre>
