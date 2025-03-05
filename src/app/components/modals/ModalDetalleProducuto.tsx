@@ -5,7 +5,7 @@ import { IProducto } from "../../../../ts/models/IProducto";
 import ProductoInfo from "../cards/ProductoInfo";
 import { Heart, ShoppingCart, X } from "lucide-react";
 import { useActualizarProducto } from "@/app/service/productos/useActualizarProducto";
-import { toast } from "sonner";
+import { ShowCustomToast } from "@/app/ui/notification/ShowCustomToast";
 
 interface PropsModalDetalleProducuto {
   producto: IProducto;
@@ -39,13 +39,12 @@ export const ModalDetalleProducuto: React.FC<PropsModalDetalleProducuto> = ({
   const modificarProducto = (pro: IProducto, estado: boolean) => {
     actualizarPro(pro, {
       onSuccess: () => {
-        toast.success(
+        ShowCustomToast(
+          "success",
           `Producto ${
             estado === true ? "agregado a la" : "eliminado de la"
           } lista correctamente`,
-          {
-            description: "Puedes revisar tu lista.",
-          }
+          3000
         );
       },
     });
