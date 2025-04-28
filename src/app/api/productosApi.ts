@@ -1,16 +1,16 @@
+import { env } from "@/environment/environment";
 import { IProducto } from "../../../ts/models/IProducto";
+
+const baseUrl = env.URL_SERVER;
 
 export const productosApi = {
   getProductos: async () => {
     try {
-      const response = await fetch(
-        "https://felipealmespa.github.io/luxeApi/productos.html"
-      );
+      const response = await fetch(baseUrl + "productos.html");
       let res: IProducto[] = [];
-      const text = await response.text(); // Obtener el contenido como texto
+      const text = await response.text();
       // Extraer contenido del <pre>
       const jsonMatch = text.match(/<pre>([\s\S]*?)<\/pre>/);
-
       if (jsonMatch && jsonMatch[1]) {
         try {
           // Intentar convertir a JSON

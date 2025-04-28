@@ -3,11 +3,11 @@ import { IProducto } from "../../../../ts/models/IProducto";
 import { EyeIcon, Heart, ShoppingCart } from "lucide-react";
 import { useActualizarProducto } from "@/app/service/productos/useActualizarProducto";
 import { isNil } from "lodash";
-import { toast } from "sonner";
 import { useState } from "react";
 import { ModalImagen } from "../modals/ModalImagen";
 import { useDisclosure } from "@heroui/react";
 import { ModalDetalleProducuto } from "../modals/ModalDetalleProducuto";
+import { ShowCustomToast } from "@/app/ui/notification/ShowCustomToast";
 interface PropsCardProductoImagen {
   producto: IProducto;
 }
@@ -38,14 +38,13 @@ export const CardProductoImagen: React.FC<PropsCardProductoImagen> = ({
   const modificarProducto = (pro: IProducto, estado: boolean) => {
     actualizarPro(pro, {
       onSuccess: () => {
-        toast.success(
-          `Producto ${
+        ShowCustomToast({
+          type: "success",
+          title: `Producto ${
             estado === true ? "agregado a la" : "eliminado de la"
           } lista correctamente`,
-          {
-            description: "Puedes revisar tu lista.",
-          }
-        );
+          duration: 3000,
+        });
       },
     });
   };

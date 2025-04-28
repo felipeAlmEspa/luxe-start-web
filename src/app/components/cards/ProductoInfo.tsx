@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import { Button } from "@heroui/react";
 import { useActualizarProducto } from "@/app/service/productos/useActualizarProducto";
 import { useCallback } from "react";
-import { toast } from "sonner";
+import { ShowCustomToast } from "@/app/ui/notification/ShowCustomToast";
 
 interface PropsProductoInfo {
   producto: IProducto;
@@ -19,7 +19,11 @@ const ProductoInfo: React.FC<PropsProductoInfo> = ({ producto }) => {
       { ...producto, favorito: false },
       {
         onSuccess: () => {
-          toast.success("Producto eliminado de favoritos correctamente");
+          ShowCustomToast({
+            type: "success",
+            title: "Producto eliminado de favoritos correctamente",
+            duration: 3000,
+          });
         },
       }
     );
